@@ -3,7 +3,7 @@
   ******************************************************************************
   * @file           : main.c -V0.0.4
   * @brief          : Main program body
-  * author: Elisa Castellari 5610013
+  * author: Elisa Castellari 5610013 / Moreno Tomaghelli 5291133
   ******************************************************************************
   */
 /* USER CODE END Header */
