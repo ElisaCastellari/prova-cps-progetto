@@ -50,9 +50,9 @@ typedef struct {  //struct with port and pin associated
 } HardwareElement_t;
 
 HardwareElement_t array_leds[NUM_BUTTONS] = {
-    {GPIOA, GPIO_PIN_5}, // LED 0, DO
-    {GPIOA, GPIO_PIN_6}, // LED 1, MI
-    {GPIOA, GPIO_PIN_7}  // LED 2, SOL
+    {GPIOA, GPIO_PIN_5}, // LED 0
+    {GPIOA, GPIO_PIN_6}, // LED 1
+    {GPIOA, GPIO_PIN_7}  // LED 2
 };
 
 HardwareElement_t array_bottoni[NUM_BUTTONS] = {
@@ -483,7 +483,7 @@ void StartGameTask(void const * argument)
           // Pausa casuale
         //  osDelay((rand() % SECONDS) + SECONDS_OFFSET);
           // 1. Aspetta il tempo dettato dallo spartito per questa specifica nota
-                    osDelay(melody[currentNoteIndex].waitTime  * DIFFICULTY);
+                 osDelay(melody[currentNoteIndex].waitTime  * DIFFICULTY);
           // Prepariamo le variabili per questo round
           buttonPressed = 0;
                     timeoutOccurred = 0;
