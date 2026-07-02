@@ -1,8 +1,9 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file           : main.c
+  * @file           : main.c -V0.0.4
   * @brief          : Main program body
+  * author: Elisa Castellari 5610013
   ******************************************************************************
   */
 /* USER CODE END Header */
