@@ -530,6 +530,7 @@ void StartGameTask(void const * argument)
                     else if (timeoutOccurred == 1) {
                         printf("MANCATO! Troppo lento.\r\n");
                          scoreEvaluate(MISSVALUE);
+                         //StopTone(); se qui c'è baco
                     }
                    // osDelay(SPACE_BETWEEN_NOTES); // Pausa prima del prossimo LED
                     if(timeoutOccurred == 0 && reactionTime < (melody[currentNoteIndex].waitTime  * DIFFICULTY)){
@@ -551,7 +552,9 @@ void StartGameTask(void const * argument)
 void TimeoutCallback(void const * argument)
 {
   /* USER CODE BEGIN TimeoutCallback */
+	//printf("MANCATO! Troppo lento.\r\n"); //provo per debug a mettere nel callback
 	timeoutOccurred = 1;
+	StopTone(); //resetto suono per andare avanti
   /* USER CODE END TimeoutCallback */
 }
 
