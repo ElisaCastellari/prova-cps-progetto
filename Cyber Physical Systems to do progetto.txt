@@ -1,0 +1,177 @@
+Cose da sistemare:
+
+main.c 426: se premo il tasto blu mentre è già partita una traccia faccio il soft reset della traccia. Al momento legge solamente un bottone a caso e va avanti dandolo come miss
+	se premi un tasto a caso e non quello sulla board inizia lo stesso, da sistemare
+
+main.c 478: Non usare SONGLENGHT ma sizeof(melody) e inoltre sostituirla in tutti i file
+
+main.c 479: spostare prima dichiarazione di targetIndex prima di questa riga perché inizia sempre il primo
+
+main.c 501: ora looppa all'infinito, vedo come fermarlo
+
+Bisogna premere e lasciare per registrare l'input: ha senso cambiare sta cosa?
+
+Appena schiacci il bottone spegne il led e smette di fare la nota. Noi vogliamo che la nota continui e il led si spenga
+
+main.c 543, 544: forse righe inutili, vedo
+
+constants.h 11,12,13: costanti non utilizzate
+
+constants.h 14: PERFECT THRESHOLD deve cambiare con la difficoltà
+
+buzzer.h sistemare le tracce già presenti
+
+game.h 12: non più usata
+
+game.c 14: non più usata
+
+game.c 66-71: non più usata
+
+game.c aggiungere hitNotes = 0;
+
+
+
+
+
+Progetto da fare
+
+Sistemare codice guardando gli standard di nome variabili e cose simili
+
+Una libreria per modulo
+
+Uso schermo separato
+
+Nella schermata non sto a riscrivere daccapo tutto ma aggiorno i numeri
+
+Carico canzoni nella memoria
+
+Generare livello direttamente dalla traccia
+
+Oggetto da prendere in mano come tromba o sax magari con colori casuali sul display per difficoltà aumentata
+
+PCB con tutto
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MCU usato: https://www.st.com/en/microcontrollers-microprocessors/stm32f4-series.html
+
+Articoli interessanti: https://www.silabs.com/whitepapers
+
+Cores ARM della ST: https://www.st.com/content/st_com/en/arm-32-bit-microcontrollers.html
+
+Naming code: https://www.digikey.com/en/maker/tutorials/2020/understanding-stm32-naming-conventions
+
+Per ogni Cube Firmware package ci sono vari esempi da consultare
+
+Si raccomanda un versioning system per non perdere il codice
+
+Ch 7 Interrupts pag 27, 29-30 trovo esempi di interrupts
+
+Callback: function called by the system (in our case the HAL) The system in pag 29 resets the interrupt
+
+
+Lezione 1: 24/02/2026 11-13
+
+Per le slide guardo cartella STM
+
+Installare STM32CubeIDE e STM32CubeMX, guardo registrazione per tutorial
+
+Slides: STM32 microcontrollers tutta
+
+poi CH3 Hello nucleo tutta
+
+board F401RE
+
+
+Lezione 2: 27/02/2026 8-10
+
+Presa da appunti + videolezione
+
+CH 5 Introduction to debugging
+
+CH 6 GPIO
+
+
+Lezione 3: 03/03/2026 11-13
+
+CH 6 GPIO tutta
+
+CH 7 Interrupts fino a pag 21
+
+
+Lezione 4: 06/03/2026 8-10
+
+CH7 Interrupts tutta
+
+
+Lezione 5: 10/03/2026 11-13
+
+CH8 Univ Asyn Ser Comm fino a pag 81
+
+
+Lezione 6: 13/03/2026 8-10 
+
+LAB: fare esercizi 2.1-2.2-2.3 scrivendo le funzioni giuste per ogni esercizio, prossima volta le provo
+
+2.1: Toggle pin. Dopo il toggle bisogna connettere il LOGIC ANALYZER al pin A5 (femmina sulla board) e misurare il periodo di toggle computando l'errore nel seguente modo:
+
+Ogni due toggle ho un periodo. Se prendo l'inverso del tempo tra un toggle e l'altro ho il semiperiodo. Se lo raddoppio ho la frequenza di toggle.
+
+Per l'errore faccio la differenza tra expected value (argomento del delay) meno il measured value) in modo simile al segnale di errore di teoria dei sistemi. Una per i semiperiodi e una per il totale.
+
+2.2:
+
+2.3:
+
+
+Lezione 7: 17/03/2026 11-13
+
+LAB: esercizio 4.1 con logic analyzer
+
+
+Lezione 8: 20/03/2026 10-13
+
+CH9 DMA fino a pag 83
+
+
+Lezione 9: 27/03/2026 8-10
+
+CH9 DMA tutto + esempi CH9
+
+
+Lezione 10: 31/03/2026 11-13
+
+CH10 clock tree tutta
+
+CH11 timers fino a pag 30
+
+
+Lezione 11: 10/04/2026 8-10
+
+CH11 timers fino a pag 133
+
+
+Lezione 12: 14/04/2026 11-13
+
+CH11 timers fino a pag 181
+
+
+Lezione 13: 17/04/2026 8-10
+
+Lab su timers

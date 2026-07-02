@@ -63,10 +63,10 @@ HardwareElement_t array_bottoni[NUM_BUTTONS] = {
 
 
 volatile uint8_t buttonPressed = 0; // 0 se non premuto, 1 se premuto
-volatile uint8_t timeoutOccurred = 0;
-volatile int8_t pressedButtonIndex = -1; //to understand wich button has been pressed
+volatile uint8_t timeoutOccurred = 0; // missed input
+volatile int8_t pressedButtonIndex = -1; //to understand which button has been pressed
 uint32_t startTime = 0;
-uint8_t targetIndex = 0; //the led that turned on
+uint8_t targetIndex = 0; //the led that is turned on
 uint32_t reactionTime = 0;
 const GameNote_t* melody; //my melody
 
@@ -116,10 +116,10 @@ void PlayTone(uint16_t freq) {
 
     // La matematica del suono: il timer va a 1 MHz (1.000.000 Hz)
     // Per avere 440 Hz, devo fargli contare fino a (1000000 / 440)
-    uint32_t arr_value = 1000000 / freq;
+    uint32_t array_value = 1000000 / freq;
 
-    __HAL_TIM_SET_AUTORELOAD(&htim2, arr_value);     // Imposta l'altezza della nota
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, arr_value / 2); // Imposta il volume (Duty cycle 50%)
+    __HAL_TIM_SET_AUTORELOAD(&htim2, array_value);     // Imposta l'altezza della nota, &htim2 è il nome del timer
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, array_value / 2); // Imposta il volume (Duty cycle 50%)
 
     HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);        // Accendi il suono!
 }
@@ -433,7 +433,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	        for (int i = 0; i < NUM_BUTTONS; i++) {
 	            if (GPIO_Pin == array_bottoni[i].pin) {
 	                // Trovato! Calcolo il tempo
-	                reactionTime = osKernelSysTick() - startTime;
+	                reactionTime = osKernelSysTick() - startTime; // start time viene eguagliato a osKernelSysTick() dopo ogni input
 	                pressedButtonIndex = i; // Mi salvo QUALE ha premuto
 	                buttonPressed = 1;      // Sblocco il gioco
 	                break;                  // Esco dal ciclo for
