@@ -9,6 +9,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "constants.h"
+#include "game.h"
 #include <stdio.h>   // Per printf
 #include <stdlib.h>  // Per rand()
 
@@ -19,8 +20,10 @@ UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 volatile uint8_t buttonPressed = 0; // 0 se non premuto, 1 se premuto
-int combo = 0; //tiene conto la combo
-uint32_t timer_value = 0; // valuta tempo di risposta
+volatile uint8_t start = 0;
+
+int timer_value = 0; // valuta tempo di risposta
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -61,17 +64,29 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
   // Leggiamo un valore a caso dalla memoria per inizializzare il random
-  srand(HAL_GetTick());
+
   printf("\r\n=== RHYTHM GAME PROTOTYPE ===\r\n");
+  //createDummySong();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  printf("press the button to start \n");
+	  buttonPressed = 0; //to clear from older clicks
+	  start = 1; // evaluate the button press
+
+	  while (buttonPressed == 0){
+		  //waiting for game to start
+	  }
+	  start = 0; //start phase finished
+	  buttonPressed=0; //reset button to restart game
+	  printf("\r\n game start! \r\n");
       printf("\r\nWAIT FOR THE LED TO TURN ON\r\n");
 
       // Aspetta un tempo casuale tra 2 e 5 secondi
+      for(int i = 0; i < SONGLENGHT; i++){
       HAL_Delay(rand() % SECONDS + SECONDS_OFFSET);
 
       buttonPressed = 0;
@@ -87,7 +102,9 @@ int main(void)
 
       // Assicuriamoci che il LED sia spento per il prossimo round
       HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
-
+      }
+	  finalScore(); //evaluates results
+    printf("\r\n------GAME OVER, THANKS FOR PLAYING!------\r\n");
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -101,17 +118,15 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     // PC13 è il Pin 13
     if (GPIO_Pin == GPIO_PIN_13 && buttonPressed == 0) {
         // Se il timer sta ancora girando (non ha fatto stop)
-        if (__HAL_TIM_GET_COUNTER(&htim2) > 0) {
+    	if (start == 1){
+    		buttonPressed = 1;
+    	}
+    	else if (__HAL_TIM_GET_COUNTER(&htim2) > 0) {
             HAL_TIM_Base_Stop_IT(&htim2); // Ferma il timer! Hai vinto!
             timer_value = __HAL_TIM_GET_COUNTER(&htim2); //prendo valore timer
             buttonPressed = 1;
             HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); // Spegni LED
-            combo++;
-            if(timer_value < PERFECT_TRESHOLD){
-            	printf("PERFECT\r\n");
-            }
-            printf("got it, your combo is %i, response time %u.\r\n", combo, timer_value);
-
+            scoreEvaluate(timer_value);
         }
     }
 }
@@ -123,8 +138,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
         if (buttonPressed == 0) { // Se non hai premuto in tempo
             HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); // Spegni LED
-            combo = 0;
-            printf("miss.\r\n");
+            scoreEvaluate(MISSVALUE);
         }
     }
 }

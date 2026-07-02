@@ -1,0 +1,4 @@
+../Core/Src/game.c:24:6:scoreEvaluate	6
+../Core/Src/game.c:66:6:createDummySong	2
+../Core/Src/game.c:73:6:finalScore	3
+../Core/Src/game.c:94:6:resetScore	1
