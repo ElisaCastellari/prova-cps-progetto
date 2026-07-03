@@ -11,7 +11,6 @@
 
 int combo = 0; //tiene conto la combo
 int score = 0; //tiene conto dello score
-int dummySong[SONGLENGHT]; //array con ritardi casuali
 int perfect = 0;
 int great = 0;
 int good = 0;
@@ -31,19 +30,19 @@ void scoreEvaluate(int timer_value){ //per valutare
     	avgResponseTime += timer_value; //to do average at the end
     	hitNotes++;
 
-     if(timer_value < PERFECT_TRESHOLD){
+     if(timer_value < PERFECT_TRESHOLD * DIFFICULTY){
      	printf("PERFECT\r\n");
      	score += 500;
      	combo++;
      	perfect++;
      }
-     else if(timer_value < PERFECT_TRESHOLD*2){
+     else if(timer_value < PERFECT_TRESHOLD*2 * DIFFICULTY){
      	printf("GREAT\r\n");
      	score += 300;
      	combo++;
      	great++;
      }
-     else if(timer_value < PERFECT_TRESHOLD*3){
+     else if(timer_value < PERFECT_TRESHOLD*3 * DIFFICULTY){
      	printf("GOOD\r\n");
      	score += 150;
      	combo++;
@@ -63,12 +62,6 @@ void scoreEvaluate(int timer_value){ //per valutare
 
 }
 
-void createDummySong(void){ // gerera ritardi casuali per simulare una sequenza di una canzone
-	 srand(42);
-
-	 for(int i = 0; i < SONGLENGHT; i++)
-		 dummySong[i] = rand() % SECONDS + SECONDS_OFFSET;
-}
 
 void finalScore(void){ //per printare i risultati completi a fine game
 	printf("\n----------------final results:-------------------\r\n");
@@ -101,4 +94,5 @@ void resetScore(void){ //to reset everything after the game has ended
 	bad = 0;
 	miss = 0;
 	avgResponseTime = 0;
+	hitNotes = 0;
 }

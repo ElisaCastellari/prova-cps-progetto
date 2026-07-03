@@ -15,19 +15,19 @@ Appena schiacci il bottone spegne il led e smette di fare la nota. Noi vogliamo 
 
 main.c 543, 544: forse righe inutili, vedo
 
-constants.h 11,12,13: costanti non utilizzate
+constants.h 11,12,13: costanti non utilizzate				FATTO
 
-constants.h 14: PERFECT THRESHOLD deve cambiare con la difficoltà
+constants.h 14: PERFECT THRESHOLD deve cambiare con la difficoltà	FATTO
 
 buzzer.h sistemare le tracce già presenti
 
-game.h 12: non più usata
+game.h 12: non più usata 		FATTO
 
-game.c 14: non più usata
+game.c 14: non più usata		FATTO
 
-game.c 66-71: non più usata
+game.c 66-71: non più usata		FATTO
 
-game.c aggiungere hitNotes = 0;
+game.c aggiungere hitNotes = 0;   	FATTO
 
 
 
