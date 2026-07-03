@@ -1,7 +1,7 @@
 Cose da sistemare:
 
 main.c 426: se premo il tasto blu mentre è già partita una traccia faccio il soft reset della traccia. Al momento legge solamente un bottone a caso e va avanti dandolo come miss
-	se premi un tasto a caso e non quello sulla board inizia lo stesso, da sistemare
+	se premi un tasto a caso e non quello sulla board inizia lo stesso, da sistemare.  INOLTRE NON DA NESSUN RISULTATO, NON SEGNA IL MISS DKCE SOLO ERRORE E NON HA EFFETTO SULLO SCORE. 			FATTO PARTE START
 
 main.c 478: Non usare SONGLENGHT ma sizeof(melody) e inoltre sostituirla in tutti i file
 
@@ -28,6 +28,8 @@ game.c 14: non più usata		FATTO
 game.c 66-71: non più usata		FATTO
 
 game.c aggiungere hitNotes = 0;   	FATTO
+
+
 
 
 

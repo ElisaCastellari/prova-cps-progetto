@@ -425,7 +425,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 
 	        // 1. IL TASTO BLU PER INIZIARE LA PARTITA!
 	        if (GPIO_Pin == GPIO_PIN_13) {
-	            buttonPressed = 1;
+	            buttonPressed = 2; // prova mia
 	            return; // Esci subito dalla funzione, non fare altro
 	        }
 
@@ -460,13 +460,17 @@ void StartGameTask(void const * argument)
 	  combo = 0;
 	  score = 0;
       printf("\r\n=== RHYTHM GAME PROTOTYPE ===\r\n");
-      printf("Press the button to start\r\n");
+      printf("Press the BLUE button to start\r\n");
 
       buttonPressed = 0;
 
       // 1. Fase di attesa inizio
-      while (buttonPressed == 0){
-          osDelay(10); // Usa osDelay per non impallare FreeRTOS
+      while (buttonPressed != 2){ //prova qui per baco
+    	  if (buttonPressed != 0 && buttonPressed != 2) { //PROVA, ALTRIMENTI SI IMPALLA
+    	            printf("Wrong button! Press the start button.\r\n");
+    	            buttonPressed = 0;
+    	       }
+          osDelay(100); // Usa osDelay per non impallare FreeRTOS (AUMENTATO ALTRIMENTI STAMPAVA PIU VOLTE LA RIGA NELL'IF)
       }
 
       buttonPressed = 0; // Resetta per il gioco
