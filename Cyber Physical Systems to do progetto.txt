@@ -1,7 +1,7 @@
 Cose da sistemare:
 
-main.c 426: se premo il tasto blu mentre è già partita una traccia faccio il soft reset della traccia. Al momento legge solamente un bottone a caso e va avanti dandolo come miss
-	se premi un tasto a caso e non quello sulla board inizia lo stesso, da sistemare.  INOLTRE NON DA NESSUN RISULTATO, NON SEGNA IL MISS DKCE SOLO ERRORE E NON HA EFFETTO SULLO SCORE. 			FATTO PARTE START FATTA ANCHE L'ALTRA
+DONE	main.c 426: se premo il tasto blu mentre è già partita una traccia faccio il soft reset della traccia. Al momento legge solamente un bottone a caso e va avanti dandolo come miss
+	se premi un tasto a caso e non quello sulla board inizia lo stesso, da sistemare. INOLTRE NON DA NESSUN RISULTATO, NON SEGNA IL MISS DKCE SOLO ERRORE E NON HA EFFETTO SULLO SCORE
 
 main.c 478: Non usare SONGLENGHT ma sizeof(melody) e inoltre sostituirla in tutti i file
 
@@ -15,19 +15,19 @@ Appena schiacci il bottone spegne il led e smette di fare la nota. Noi vogliamo 
 
 main.c 543, 544: forse righe inutili, vedo
 
-constants.h 11,12,13: costanti non utilizzate				FATTO
+DONE	constants.h 11,12,13: costanti non utilizzate	
 
-constants.h 14: PERFECT THRESHOLD deve cambiare con la difficoltà	FATTO
+DONE	constants.h 14: PERFECT THRESHOLD deve cambiare con la difficoltà
 
-buzzer.h sistemare le tracce già presenti
+DONE	buzzer.h sistemare le tracce già presenti
 
-game.h 12: non più usata 		FATTO
+DONE	game.h 12: non più usata
 
-game.c 14: non più usata		FATTO
+DONE	game.c 14: non più usata
 
-game.c 66-71: non più usata		FATTO
+DONE	game.c 66-71: non più usata
 
-game.c aggiungere hitNotes = 0;   	FATTO
+DONE	game.c aggiungere hitNotes = 0;
 
 
 
