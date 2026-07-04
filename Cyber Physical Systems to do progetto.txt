@@ -11,7 +11,9 @@ main.c 501: ora looppa all'infinito, vedo come fermarlo
 
 Bisogna premere e lasciare per registrare l'input: ha senso cambiare sta cosa?
 
-Appena schiacci il bottone spegne il led e smette di fare la nota. Noi vogliamo che la nota continui e il led si spenga
+Se c'è il timeout si blocca 
+
+DONE	Appena schiacci il bottone spegne il led e smette di fare la nota. Noi vogliamo che la nota continui e il led si spenga
 
 main.c 543, 544: forse righe inutili, vedo
 

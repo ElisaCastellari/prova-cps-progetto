@@ -119,7 +119,7 @@ void PlayTone(uint16_t freq) {
     uint32_t array_value = 1000000 / freq;
 
     __HAL_TIM_SET_AUTORELOAD(&htim2, array_value);     // Imposta l'altezza della nota, &htim2 è il nome del timer
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, array_value / 2); // Imposta il volume (Duty cycle 50%)
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, array_value / VOLUME); // Imposta il volume (Duty cycle 50%)
 
     HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);        // Accendi il suono!
 }
@@ -167,7 +167,7 @@ int main(void)
   //printf("\r\n=== RHYTHM GAME PROTOTYPE ===\r\n");
 
   //-------------------------------------------------------------------------------
-  melody= jingleBells; //song selection
+  melody= superMario; //song selection
   //-------------------------------------------------------------------------------
   //createDummySong();
   /* USER CODE END 2 */
@@ -199,7 +199,7 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of GameTask */
-  osThreadDef(GameTask, StartGameTask, osPriorityNormal, 0, 128);
+  osThreadDef(GameTask, StartGameTask, osPriorityNormal, 0, 1024); // impostata a mano a 1024 anzichè 128 sotto consiglio di gemini
   GameTaskHandle = osThreadCreate(osThread(GameTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
@@ -480,6 +480,8 @@ void StartGameTask(void const * argument)
 
       // 2. Ciclo della Canzone
       for(int i = 0; i < SONGLENGHT; i++){
+    	  srand(osKernelSysTick());
+    	  targetIndex = rand() % NUM_BUTTONS;
     	  HAL_GPIO_WritePin(array_leds[targetIndex].port, array_leds[targetIndex].pin, GPIO_PIN_RESET);
     	  StopTone(); //stops the note
           printf("\r\nWAIT FOR THE LED...\r\n");
@@ -494,7 +496,7 @@ void StartGameTask(void const * argument)
                     pressedButtonIndex = -1;
 
                     // 1. Estrai un numero a caso tra 0 e (NUM_BOTTONI - 1)
-                    targetIndex = rand() % NUM_BUTTONS;
+                    //targetIndex = rand() % NUM_BUTTONS;
 
                     // 2. Accendi SOLO il led scelto dall'array!
                     HAL_GPIO_WritePin(array_leds[targetIndex].port, array_leds[targetIndex].pin, GPIO_PIN_SET);
@@ -507,7 +509,7 @@ void StartGameTask(void const * argument)
                     printf("PREMI IL BOTTONE %d!\r\n", targetIndex);
 
                     startTime = osKernelSysTick();
-                    osTimerStart(TimeoutTimerHandle, 2000);
+                    osTimerStart(TimeoutTimerHandle, 2000 * DIFFICULTY);
 
                     // 3. Aspetta il click...
                     while(buttonPressed == 0 && timeoutOccurred == 0) {
@@ -522,6 +524,7 @@ void StartGameTask(void const * argument)
                     // 5. Valutazione: ha premuto il tasto, ma è quello GIUSTO?
                     if (buttonPressed == 1) {
                         if (pressedButtonIndex == targetIndex) {
+                        	pressedButtonIndex = BLUE_BUTTON; // iniziando hai premuto il tatso blu, dopo ne premi un'altro. Se non va bene rimanere con altri tasti in memoria, al momento torniamo con il blu solo dopo aver capito che il tasto premuto è giusto.
                             // HA PREMUTO IL TASTO GIUSTO!
                             printf("GIUSTO! Preso in: %lu ms\r\n", reactionTime);
                              scoreEvaluate(reactionTime);
@@ -534,6 +537,7 @@ void StartGameTask(void const * argument)
                     else if (timeoutOccurred == 1) {
                         printf("MANCATO! Troppo lento.\r\n");
                          scoreEvaluate(MISSVALUE);
+                         pressedButtonIndex = targetIndex; //
                          //timeoutOccurred = 0; //AGGIUNTO
                          //StopTone(); //se qui c'è baco
                     }
@@ -550,14 +554,16 @@ void StartGameTask(void const * argument)
                     }
                    // osDelay(SPACE_BETWEEN_NOTES); // Pausa prima del prossimo LED
                     if(timeoutOccurred == 0 && reactionTime < (melody[currentNoteIndex].waitTime  * DIFFICULTY)){
+                    	//printf("%u \n", (melody[currentNoteIndex].waitTime* DIFFICULTY - reactionTime));
+                    	HAL_GPIO_WritePin(array_leds[targetIndex].port, array_leds[targetIndex].pin, GPIO_PIN_RESET);
                     	osDelay((melody[currentNoteIndex].waitTime  * DIFFICULTY) - reactionTime);
                           }
                     HAL_GPIO_WritePin(array_leds[targetIndex].port, array_leds[targetIndex].pin, GPIO_PIN_RESET);
                     StopTone(); //stops the note
       }
                           printf("\r\n------GAME OVER, THANKS FOR PLAYING!------\r\n");
-                          HAL_GPIO_WritePin(array_leds[targetIndex].port, array_leds[targetIndex].pin, GPIO_PIN_RESET);
-                          StopTone(); //stops the note
+                          //HAL_GPIO_WritePin(array_leds[targetIndex].port, array_leds[targetIndex].pin, GPIO_PIN_RESET);
+                          //StopTone(); //stops the note
                           finalScore(); //print final results
                           osDelay(3000); // Aspetta un po' prima di permettere di rigiocare
   }

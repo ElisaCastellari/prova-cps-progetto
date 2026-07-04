@@ -12,7 +12,7 @@
 #define MISSVALUE 9999
 #define SONGLENGHT 15
 #define DIFFICULTY 1
-
+#define VOLUME 2
 
 #define NUM_BUTTONS 3
 #define BLUE_BUTTON 99
