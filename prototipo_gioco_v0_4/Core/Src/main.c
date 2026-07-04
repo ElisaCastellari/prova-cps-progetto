@@ -425,7 +425,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 
 	        // 1. IL TASTO BLU PER INIZIARE LA PARTITA!
 	        if (GPIO_Pin == GPIO_PIN_13) {
-	            buttonPressed = 2; // prova mia
+	            buttonPressed = BLUE_BUTTON; // prova mia
 	            return; // Esci subito dalla funzione, non fare altro
 	        }
 
@@ -465,8 +465,8 @@ void StartGameTask(void const * argument)
       buttonPressed = 0;
 
       // 1. Fase di attesa inizio
-      while (buttonPressed != 2){ //prova qui per baco
-    	  if (buttonPressed != 0 && buttonPressed != 2) { //PROVA, ALTRIMENTI SI IMPALLA
+      while (buttonPressed != BLUE_BUTTON){ //prova qui per baco
+    	  if (buttonPressed != 0 && buttonPressed != BLUE_BUTTON) { //PROVA, ALTRIMENTI SI IMPALLA
     	            printf("Wrong button! Press the start button.\r\n");
     	            buttonPressed = 0;
     	       }
@@ -534,7 +534,19 @@ void StartGameTask(void const * argument)
                     else if (timeoutOccurred == 1) {
                         printf("MANCATO! Troppo lento.\r\n");
                          scoreEvaluate(MISSVALUE);
-                         //StopTone(); se qui c'è baco
+                         //timeoutOccurred = 0; //AGGIUNTO
+                         //StopTone(); //se qui c'è baco
+                    }
+                    else if (buttonPressed == BLUE_BUTTON){ //tasto blu riparte il gioco
+                    	printf("Il gioco ripartirà a breve...\r\n");
+                    	resetScore(); //resetto tutto per far iniziare il gioco da capo
+                    	currentNoteIndex = 0;
+                    	i = -1; //altrimenti max era 14
+                    	osDelay(1000);
+                    }
+                    else{ //per errori vari random
+                        printf("ERRORE! Hai premuto un tasto non riconosciuto!\r\n");
+                        scoreEvaluate(MISSVALUE);
                     }
                    // osDelay(SPACE_BETWEEN_NOTES); // Pausa prima del prossimo LED
                     if(timeoutOccurred == 0 && reactionTime < (melody[currentNoteIndex].waitTime  * DIFFICULTY)){
@@ -556,9 +568,9 @@ void StartGameTask(void const * argument)
 void TimeoutCallback(void const * argument)
 {
   /* USER CODE BEGIN TimeoutCallback */
-	//printf("MANCATO! Troppo lento.\r\n"); //provo per debug a mettere nel callback
+	//printf("MANCATO! Troppo lento CALLBACK.\r\n"); //provo per debug a mettere nel callback
 	timeoutOccurred = 1;
-	StopTone(); //resetto suono per andare avanti
+	//StopTone(); //resetto suono per andare avanti
   /* USER CODE END TimeoutCallback */
 }
 
