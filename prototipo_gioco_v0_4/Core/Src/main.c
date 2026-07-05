@@ -512,15 +512,17 @@ void StartGameTask(void const * argument)
 {
   /* USER CODE BEGIN 5 */
 //<<<<<<< HEAD
-  for(;;)
-  {
-	  combo = 0;
-	  score = 0;
-      printf("\r\n=== RHYTHM GAME PROTOTYPE ===\r\n");
+ // for(;;)
+  //{
+	 // combo = 0;
+	 // score = 0;
+     // printf("\r\n=== RHYTHM GAME PROTOTYPE ===\r\n");
 
       melody = melodySelection();
+      gamePlay();
 
-      printf("Press the BLUE button to start\r\n");
+      //printf("Press the BLUE button to start\r\n");
+
 //=======
 //>>>>>>> 277fe622c39a7e296af40d7796e9d3ec46e9e35a
 
