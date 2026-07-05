@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ../Core/Src/main.c:113:1:__io_putchar	16	static
 ../Core/Src/main.c:123:6:PlayTone	24	static
 ../Core/Src/main.c:137:6:StopTone	8	static
@@ -13,3 +14,19 @@
 ../Core/Src/main.c:642:6:Callback02	16	static
 ../Core/Src/main.c:659:6:HAL_TIM_PeriodElapsedCallback	16	static
 ../Core/Src/main.c:677:6:Error_Handler	4	static,ignoring_inline_asm
+=======
+../Core/Src/main.c:105:1:__io_putchar	16	static
+../Core/Src/main.c:115:6:PlayTone	24	static
+../Core/Src/main.c:129:6:StopTone	8	static
+../Core/Src/main.c:138:5:main	64	static
+../Core/Src/main.c:231:6:SystemClock_Config	88	static
+../Core/Src/main.c:278:13:MX_TIM2_Init	64	static
+../Core/Src/main.c:337:13:MX_USART2_UART_Init	8	static
+../Core/Src/main.c:370:13:MX_GPIO_Init	48	static
+../Core/Src/main.c:424:6:HAL_GPIO_EXTI_Callback	24	static
+../Core/Src/main.c:456:6:StartGameTask	16	static
+../Core/Src/main.c:464:6:TimeoutCallback	16	static
+../Core/Src/main.c:474:6:Callback02	16	static
+../Core/Src/main.c:491:6:HAL_TIM_PeriodElapsedCallback	16	static
+../Core/Src/main.c:509:6:Error_Handler	8	static,ignoring_inline_asm
+>>>>>>> 277fe622c39a7e296af40d7796e9d3ec46e9e35a
