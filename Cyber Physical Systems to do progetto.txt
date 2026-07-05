@@ -1,21 +1,25 @@
 Cose da sistemare:
 
-DONE	main.c 426: se premo il tasto blu mentre è già partita una traccia faccio il soft reset della traccia. Al momento legge solamente un bottone a caso e va avanti dandolo come miss
-	se premi un tasto a caso e non quello sulla board inizia lo stesso, da sistemare. INOLTRE NON DA NESSUN RISULTATO, NON SEGNA IL MISS DKCE SOLO ERRORE E NON HA EFFETTO SULLO SCORE
+DONE	main.c 426: se premo il tasto blu mentre è già partita una traccia faccio il soft reset
+	della traccia. Al momento legge solamente un bottone a caso e va avanti dandolo come miss
+	se premi un tasto a caso e non quello sulla board inizia lo stesso, da sistemare.
+	INOLTRE NON DA NESSUN RISULTATO, NON SEGNA IL MISS DKCE SOLO ERRORE E NON HA EFFETTO SULLO SCORE
 
 main.c 478: Non usare SONGLENGHT ma sizeof(melody) e inoltre sostituirla in tutti i file
 
-main.c 479: spostare prima dichiarazione di targetIndex prima di questa riga perché inizia sempre il primo
+DONE	main.c 479: spostare prima dichiarazione di targetIndex prima di questa riga perché inizia
+	sempre il primo
 
-main.c 501: ora looppa all'infinito, vedo come fermarlo
+DONE	main.c 501: ora looppa all'infinito, vedo come fermarlo
 
 Bisogna premere e lasciare per registrare l'input: ha senso cambiare sta cosa?
 
-Se c'è il timeout si blocca 
+DONE	Se c'è il timeout si blocca 
 
-DONE	Appena schiacci il bottone spegne il led e smette di fare la nota. Noi vogliamo che la nota continui e il led si spenga
+DONE	Appena schiacci il bottone spegne il led e smette di fare la nota.
+	Noi vogliamo che la nota continui e il led si spenga
 
-main.c 543, 544: forse righe inutili, vedo
+DONE	main.c 543, 544: forse righe inutili, vedo
 
 DONE	constants.h 11,12,13: costanti non utilizzate	
 

@@ -65,10 +65,11 @@ HardwareElement_t array_bottoni[NUM_BUTTONS] = {
 volatile uint8_t buttonPressed = 0; // 0 se non premuto, 1 se premuto
 volatile uint8_t timeoutOccurred = 0; // missed input
 volatile int8_t pressedButtonIndex = -1; //to understand which button has been pressed
+volatile uint8_t songSelection = 0;
 uint32_t startTime = 0;
 uint8_t targetIndex = 0; //the led that is turned on
 uint32_t reactionTime = 0;
-const GameNote_t* melody; //my melody
+GameNote_t* melody; //my melody
 
 extern int combo; //tiene conto la combo
 extern int score; //tiene conto dello score
@@ -80,7 +81,15 @@ extern const GameNote_t happyBirthday[MELODY_LENGTH];
 extern const GameNote_t jingleBells[MELODY_LENGTH];
 extern const GameNote_t innoAllaGioia[MELODY_LENGTH];
 
+const GameNote_t* libreriaCanzoni[] = {
+    superMario,
+    starWars,
+    happyBirthday,
+    jingleBells,
+    innoAllaGioia
+};
 
+#define NUMERO_CANZONI (sizeof(libreriaCanzoni) / sizeof(libreriaCanzoni[0]))
 //int timer_value = 0; // valuta tempo di risposta
 
 /* USER CODE END PV */
@@ -128,6 +137,50 @@ void PlayTone(uint16_t freq) {
 void StopTone() {
     HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_1);
 }
+
+GameNote_t* melodySelection(){
+
+
+	while(1) {
+		if (buttonPressed){
+
+			if (pressedButtonIndex == 2) {
+
+				if (songSelection == 0)
+					songSelection = NUMERO_CANZONI-1;
+				else
+					songSelection--;
+
+
+			}
+
+			if (pressedButtonIndex == 0) {
+
+				if (songSelection == NUMERO_CANZONI-1)
+					songSelection = 0;
+				else
+					songSelection++;
+
+			}
+
+			if (pressedButtonIndex == 1) {
+				break;
+			}
+			osDelay(50);
+			printf("Song %u \r\n", songSelection);
+
+		}
+
+		buttonPressed = 0;
+	}
+
+	printf("Song %u selected \r\n", songSelection);
+
+	return libreriaCanzoni[songSelection];
+
+}
+
+
 /* USER CODE END 0 */
 
 /**
@@ -167,7 +220,9 @@ int main(void)
   //printf("\r\n=== RHYTHM GAME PROTOTYPE ===\r\n");
 
   //-------------------------------------------------------------------------------
-  melody= superMario; //song selection
+  //melodySelecion(melody);
+  //melody = melodySelection();
+  //song selection
   //-------------------------------------------------------------------------------
   //createDummySong();
   /* USER CODE END 2 */
@@ -460,6 +515,9 @@ void StartGameTask(void const * argument)
 	  combo = 0;
 	  score = 0;
       printf("\r\n=== RHYTHM GAME PROTOTYPE ===\r\n");
+
+      melody = melodySelection();
+
       printf("Press the BLUE button to start\r\n");
 
       buttonPressed = 0;
