@@ -9,7 +9,8 @@
 #define INC_GAME_H_
 
 void scoreEvaluate(int timer_value);
-void createDummySong(void);
+void resetScore(void);
+void finalScore(void);
 
 
 
