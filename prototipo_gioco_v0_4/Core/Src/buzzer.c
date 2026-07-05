@@ -90,3 +90,4 @@ const GameNote_t starWars[MELODY_LENGTH] = {// star wars
     {NOTE_G5, 600}, // Taaaa
     {NOTE_D5, 600}  // Taaaa
 };
+

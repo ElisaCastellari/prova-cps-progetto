@@ -135,7 +135,7 @@ void gamePlay(void){
 	    	            printf("Wrong button! Press the start button.\r\n");
 	    	            buttonPressed = 0;
 	    	       }
-	          osDelay(100); // Usa osDelay per non impallare FreeRTOS (AUMENTATO ALTRIMENTI STAMPAVA PIU VOLTE LA RIGA NELL'IF)
+	          osDelay(200); // Usa osDelay per non impallare FreeRTOS (AUMENTATO ALTRIMENTI STAMPAVA PIU VOLTE LA RIGA NELL'IF)
 	      }
 
 	      buttonPressed = 0; // Resetta per il gioco

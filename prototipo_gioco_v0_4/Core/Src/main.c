@@ -90,9 +90,17 @@ const GameNote_t* libreriaCanzoni[] = {
     innoAllaGioia
 };
 
+
 #define NUMERO_CANZONI (sizeof(libreriaCanzoni) / sizeof(libreriaCanzoni[0]))
 //int timer_value = 0; // valuta tempo di risposta
 
+const char* nomiCanzoni[NUMERO_CANZONI] = { // ho messo questo per dire pure come si chiama la canzone poi
+    "Super Mario",
+    "Star Wars",
+    "Tanti Auguri",
+    "Jingle Bells",
+    "Inno alla Gioia"
+};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -140,12 +148,13 @@ void StopTone() {
 }
 
 GameNote_t* melodySelection(){
-
+	printf("---------------------Song Selection Menu:-----------------------\r\n");
+	printf("Press yellow button to go back, green to go on and red to select\r\n");
 
 	while(1) {
-		if (buttonPressed){
+		if (buttonPressed == 1){ //messo così alrimenti prendeva PURE SE SCHIACCIAVO IL BLU
 
-			if (pressedButtonIndex == 2) {
+			if (pressedButtonIndex == 2) { //indietro di uno
 
 				if (songSelection == 0)
 					songSelection = NUMERO_CANZONI-1;
@@ -155,7 +164,7 @@ GameNote_t* melodySelection(){
 
 			}
 
-			if (pressedButtonIndex == 0) {
+			if (pressedButtonIndex == 0) { // avanti di 1
 
 				if (songSelection == NUMERO_CANZONI-1)
 					songSelection = 0;
@@ -164,18 +173,18 @@ GameNote_t* melodySelection(){
 
 			}
 
-			if (pressedButtonIndex == 1) {
+			if (pressedButtonIndex == 1) { //selezione
 				break;
 			}
-			osDelay(50);
-			printf("Song %u \r\n", songSelection);
-
+			osDelay(200); //per evitare debounce  bottonui
+			printf("Song %u: %s \r\n", songSelection, nomiCanzoni[songSelection]); //cosi mi dice pure come si chiama la canzone
+			buttonPressed = 0; //lo ho spostato qui
 		}
-
-		buttonPressed = 0;
+		osDelay(10); //altro delay poer rtos
+		//buttonPressed = 0;
 	}
 
-	printf("Song %u selected \r\n", songSelection);
+	printf("Song %u selected: %s will now start: \r\n", songSelection, nomiCanzoni[songSelection]);
 
 	return libreriaCanzoni[songSelection];
 
