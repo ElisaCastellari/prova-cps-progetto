@@ -35,6 +35,10 @@ DONE	game.c 66-71: non più usata
 
 DONE	game.c aggiungere hitNotes = 0;
 
+DONE quando seleziono la canzone subito dopo da wrong button in automatico
+
+si blocca in song selection se schiaccio il bottone blu
+
 
 
 

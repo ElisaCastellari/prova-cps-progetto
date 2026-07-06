@@ -75,8 +75,10 @@ GameNote_t* melodySelection(){
 	printf("---------------------Song Selection Menu:-----------------------\r\n");
 	printf("Press yellow button to go back, green to go on and red to select\r\n");
 	GameNote_t* selectedSong;
-
+	songSelection = 0;
+	printf("Song %u: %s \r\n", songSelection + 1, nomiCanzoni[songSelection]); //cosi mi dice pure come si chiama la canzone
 	while(1) {
+		//printf("Song %u: %s \r\n", songSelection + 1, nomiCanzoni[songSelection]); //cosi mi dice pure come si chiama la canzone
 		if (buttonPressed == 1){ //messo così alrimenti prendeva PURE SE SCHIACCIAVO IL BLU
 
 			if (pressedButtonIndex == 2) { //indietro di uno
@@ -87,29 +89,33 @@ GameNote_t* melodySelection(){
 					songSelection--;
 
 
-			}
-
-			if (pressedButtonIndex == 0) { // avanti di 1
+			} else if (pressedButtonIndex == 0) { // avanti di 1
 
 				if (songSelection == NUMERO_CANZONI-1)
 					songSelection = 0;
 				else
 					songSelection++;
 
+			} else if (pressedButtonIndex == 1) { //selezione
+				break;
+
+			} else{
+				printf("unreconnised input \r\n");
 			}
 
-			if (pressedButtonIndex == 1) { //selezione
-				break;
-			}
 			osDelay(200); //per evitare debounce  bottonui
-			printf("Song %u: %s \r\n", songSelection, nomiCanzoni[songSelection]); //cosi mi dice pure come si chiama la canzone
+			printf("Song %u: %s \r\n", songSelection + 1, nomiCanzoni[songSelection]); //cosi mi dice pure come si chiama la canzone
 			buttonPressed = 0; //lo ho spostato qui
+		}
+		else if (buttonPressed == BLUE_BUTTON){
+			songSelection = 0;
 		}
 		osDelay(10); //altro delay poer rtos
 		//buttonPressed = 0;
 	}
 
-	printf("Song %u selected: %s will now start: \r\n", songSelection, nomiCanzoni[songSelection]);
+	printf("Song %u selected: %s will now start: \r\n", songSelection + 1 , nomiCanzoni[songSelection]);
+	osDelay(200); //per evitare debounce  bottonui
 
 	selectedSong = libreriaCanzoni[songSelection];
 
