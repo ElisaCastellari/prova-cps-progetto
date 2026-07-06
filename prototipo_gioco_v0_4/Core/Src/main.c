@@ -75,32 +75,12 @@ GameNote_t* melody; //my melody
 extern int combo; //tiene conto la combo
 extern int score; //tiene conto dello score
 
-//my songs
-extern const GameNote_t superMario[MELODY_LENGTH];
-extern const GameNote_t starWars[MELODY_LENGTH];
-extern const GameNote_t happyBirthday[MELODY_LENGTH];
-extern const GameNote_t jingleBells[MELODY_LENGTH];
-extern const GameNote_t innoAllaGioia[MELODY_LENGTH];
-
-const GameNote_t* libreriaCanzoni[] = {
-    superMario,
-    starWars,
-    happyBirthday,
-    jingleBells,
-    innoAllaGioia
-};
 
 
-#define NUMERO_CANZONI (sizeof(libreriaCanzoni) / sizeof(libreriaCanzoni[0]))
+
 //int timer_value = 0; // valuta tempo di risposta
 
-const char* nomiCanzoni[NUMERO_CANZONI] = { // ho messo questo per dire pure come si chiama la canzone poi
-    "Super Mario",
-    "Star Wars",
-    "Tanti Auguri",
-    "Jingle Bells",
-    "Inno alla Gioia"
-};
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -128,67 +108,9 @@ PUTCHAR_PROTOTYPE
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-// Funzione magica per generare una nota
-void PlayTone(uint16_t freq) {
-    if (freq == 0) return; // Se è 0, non suono
-
-    // La matematica del suono: il timer va a 1 MHz (1.000.000 Hz)
-    // Per avere 440 Hz, devo fargli contare fino a (1000000 / 440)
-    uint32_t array_value = 1000000 / freq;
-
-    __HAL_TIM_SET_AUTORELOAD(&htim2, array_value);     // Imposta l'altezza della nota, &htim2 è il nome del timer
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, array_value / VOLUME); // Imposta il volume (Duty cycle 50%)
-
-    HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);        // Accendi il suono!
-}
-
-// Funzione per spegnere il suono
-void StopTone() {
-    HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_1);
-}
-
-GameNote_t* melodySelection(){
-	printf("---------------------Song Selection Menu:-----------------------\r\n");
-	printf("Press yellow button to go back, green to go on and red to select\r\n");
-
-	while(1) {
-		if (buttonPressed == 1){ //messo così alrimenti prendeva PURE SE SCHIACCIAVO IL BLU
-
-			if (pressedButtonIndex == 2) { //indietro di uno
-
-				if (songSelection == 0)
-					songSelection = NUMERO_CANZONI-1;
-				else
-					songSelection--;
 
 
-			}
 
-			if (pressedButtonIndex == 0) { // avanti di 1
-
-				if (songSelection == NUMERO_CANZONI-1)
-					songSelection = 0;
-				else
-					songSelection++;
-
-			}
-
-			if (pressedButtonIndex == 1) { //selezione
-				break;
-			}
-			osDelay(200); //per evitare debounce  bottonui
-			printf("Song %u: %s \r\n", songSelection, nomiCanzoni[songSelection]); //cosi mi dice pure come si chiama la canzone
-			buttonPressed = 0; //lo ho spostato qui
-		}
-		osDelay(10); //altro delay poer rtos
-		//buttonPressed = 0;
-	}
-
-	printf("Song %u selected: %s will now start: \r\n", songSelection, nomiCanzoni[songSelection]);
-
-	return libreriaCanzoni[songSelection];
-
-}
 
 
 /* USER CODE END 0 */
@@ -527,7 +449,7 @@ void StartGameTask(void const * argument)
 	 // score = 0;
      // printf("\r\n=== RHYTHM GAME PROTOTYPE ===\r\n");
 
-      melody = melodySelection();
+      //melody = melodySelection();
       gamePlay();
 
       //printf("Press the BLUE button to start\r\n");

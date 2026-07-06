@@ -10,6 +10,7 @@
 
 
 #include <main.h>
+#include "buzzer.h"
 
 void scoreEvaluate(int timer_value);
 void resetScore(void);
@@ -17,6 +18,7 @@ void finalScore(void);
 void gamePlay(void);
 void StopTone(void);
 void PlayTone(uint16_t freq);
+GameNote_t* melodySelection();
 
 
 #endif /* INC_GAME_H_ */
