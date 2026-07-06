@@ -1,7 +1,7 @@
 ../Core/Src/game.c:74:13:melodySelection	16	static
-../Core/Src/game.c:128:6:PlayTone	24	static
-../Core/Src/game.c:142:6:StopTone	8	static
-../Core/Src/game.c:146:6:scoreEvaluate	16	static
-../Core/Src/game.c:189:6:finalScore	8	static
-../Core/Src/game.c:210:6:resetScore	4	static
-../Core/Src/game.c:224:6:gamePlay	16	static
+../Core/Src/game.c:139:6:PlayTone	24	static
+../Core/Src/game.c:153:6:StopTone	8	static
+../Core/Src/game.c:157:6:scoreEvaluate	16	static
+../Core/Src/game.c:200:6:finalScore	8	static
+../Core/Src/game.c:221:6:resetScore	4	static
+../Core/Src/game.c:235:6:gamePlay	16	static

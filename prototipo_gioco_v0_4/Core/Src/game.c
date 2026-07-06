@@ -100,15 +100,26 @@ GameNote_t* melodySelection(){
 				break;
 
 			} else{
-				printf("unreconnised input \r\n");
+				printf("unrecognised input \r\n"); //per evitare bug
+				buttonPressed = 0;
 			}
 
 			osDelay(200); //per evitare debounce  bottonui
 			printf("Song %u: %s \r\n", songSelection + 1, nomiCanzoni[songSelection]); //cosi mi dice pure come si chiama la canzone
 			buttonPressed = 0; //lo ho spostato qui
 		}
-		else if (buttonPressed == BLUE_BUTTON){
+		else if (buttonPressed == BLUE_BUTTON){ //in caso in cui premo il blu. torna all'inizio della lista
+			//printf("\n\n\n sono qui \r\n\n\n");
 			songSelection = 0;
+			buttonPressed = 0;
+			osDelay(200);
+			printf("Song %u: %s \r\n", songSelection + 1, nomiCanzoni[songSelection]);
+
+		}
+		else if (buttonPressed != 0){
+			printf("unrecognised input \r\n");
+			buttonPressed = 0; //per evitare i bug
+			osDelay(200);
 		}
 		osDelay(10); //altro delay poer rtos
 		//buttonPressed = 0;
