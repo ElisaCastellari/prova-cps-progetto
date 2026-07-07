@@ -4,7 +4,7 @@
  *  Created on: 7 lug 2026
  *      Author: elyca
  */
-char buffer_schermo[32];
+char buffer_schermo[128];
 
 
 extern int combo; //tiene conto la combo
@@ -18,15 +18,68 @@ extern int bestCombo; //to keep track of the best combo
 extern float avgResponseTime; //to make average response time later
 extern int hitNotes;  // to sum all hit notes and make average
 
-
 #include "screen128x128.h"
+
 void finalScore_screen(void){ //per printare i risultati completi a fine game
+
+	ssd1306_Fill(Black);       // Svuota la memoria cancellando tutti i pixel
+	ssd1306_DrawRectangle(0, 0, 127, 127, White);
+	ssd1306_UpdateScreen();
+
 	ssd1306_SetCursor(5, 5);
 	ssd1306_WriteString("FINAL RESULTS:",Font_7x10, White);
 	printf("\n\n\nScore su Seriale: %i\r\n\n\n", score);
-	int nuovoScore = (int)score;
-	snprintf(buffer_schermo, sizeof(buffer_schermo), "Score: %ld", nuovoScore);
+	snprintf(buffer_schermo, sizeof(buffer_schermo), "Score: %i", score);
 	ssd1306_SetCursor(5, 20);
+	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+
+	snprintf(buffer_schermo, sizeof(buffer_schermo), "Best Combo: %i", bestCombo);
+	ssd1306_SetCursor(5, 35);
+	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+
+	snprintf(buffer_schermo, sizeof(buffer_schermo), "Average response time: %i", (int)(avgResponseTime / hitNotes)); //average response time, casted as int for semplicity
+		if (bestCombo == SONGLENGHT){
+			ssd1306_SetCursor(5, 50);
+			snprintf(buffer_schermo, sizeof(buffer_schermo), "Full combo!");
+			ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+			if (perfect == SONGLENGHT){
+				ssd1306_SetCursor(5, 65);
+				snprintf (buffer_schermo, sizeof(buffer_schermo), "all perfect!");
+				ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+			}
+		}
+
+		ssd1306_UpdateScreen();
+
+	osDelay(5000);
+		ssd1306_Fill(Black);       // Svuota la memoria cancellando tutti i pixel
+		ssd1306_DrawRectangle(0, 0, 127, 127, White);
+		ssd1306_UpdateScreen();    // Invia il comando allo schermo fisico per spegnerlo
+
+		osDelay(200);
+
+
+	ssd1306_SetCursor(5, 5);
+	ssd1306_WriteString("RESULTS DETAILS:",Font_7x10, White);
+
+	snprintf(buffer_schermo, sizeof(buffer_schermo), "PERFECT: %i", perfect);
+	ssd1306_SetCursor(5, 20);
+	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+
+	snprintf(buffer_schermo, sizeof(buffer_schermo), "GREAT: %i", great);
+	ssd1306_SetCursor(5, 35);
+	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+
+	snprintf(buffer_schermo, sizeof(buffer_schermo), "GOOD: %i", good);
+	ssd1306_SetCursor(5, 50);
+	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+
+	snprintf(buffer_schermo, sizeof(buffer_schermo), "BAD: %i", bad);
+	ssd1306_SetCursor(5, 65);
+	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+
+	snprintf(buffer_schermo, sizeof(buffer_schermo), "MISS: %i", miss);
+	ssd1306_SetCursor(5, 80);
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 	/*printf("Score: %i\r\n", score);
 	printf("Best Combo: %i\r\n", bestCombo);
@@ -60,32 +113,11 @@ void screen_init(void){
     // 3. Disegniamo un rettangolo sui bordi per verificare la centratura
     ssd1306_Fill(Black);
     ssd1306_DrawRectangle(0, 0, 127, 127, White);
-    ssd1306_UpdateScreen();
-}
-
-void finalScore_screen_v2(void){
-    // 1. Diamo una bella ripulita allo schermo (niente numeri vecchi in memoria!)
-    ssd1306_Fill(Black);
 
     ssd1306_SetCursor(5, 5);
-    ssd1306_WriteString("FINAL RESULTS:", Font_7x10, White);
+    ssd1306_WriteString("RHYTHM GAME PROTOTYPE",Font_7x10, White);
 
-    // --- TEST 1: NUMERO FINTO ---
-    // Se questo non funziona, è rotta la funzione sprintf
-    char str_finta[32];
-    sprintf(str_finta, "Finto: 999");
-    ssd1306_SetCursor(5, 20);
-    ssd1306_WriteString(str_finta, Font_7x10, White);
 
-    // --- TEST 2: LA TUA VARIABILE ---
-    // Se questo stampa 0, il problema è il valore della variabile in QUESTO esatto millisecondo
-    char str_vera[32];
-    sprintf(str_vera, "Vero: %d", (int)score);
-    ssd1306_SetCursor(5, 35);
-    ssd1306_WriteString(str_vera, Font_7x10, White);
-
-    // Mandiamo tutto allo schermo in un colpo solo
     ssd1306_UpdateScreen();
 }
-
 

@@ -41,6 +41,10 @@ DONE	si blocca in song selection se schiaccio il bottone blu
 
 Se quando finisce una canzone non aspetti abbastanza si blocca. Scrive song 1 poi wrong button poi di nuovo song 1 poi puoi andare
 
+magari una funzione sola per resettare lo schermo
+
+capire se c'è un modo per fare andare a capo da sola la scritta nello schermetto
+
 
 
 

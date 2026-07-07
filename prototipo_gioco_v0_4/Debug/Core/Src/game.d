@@ -32,7 +32,7 @@ Core/Src/game.o: ../Core/Src/game.c ../Core/Inc/main.h \
  ../Core/Inc/constants.h ../Core/Inc/game.h ../Core/Inc/buzzer.h \
  ../Core/Inc/pitches.h ../Core/Inc/screen128x128.h ../Core/Inc/ssd1306.h \
  ../Core/Inc/ssd1306_conf_template.h ../Core/Inc/ssd1306_fonts.h \
- ../Core/Inc/ssd1306_tests.h \
+ ../Core/Inc/ssd1306_tests.h ../Core/Inc/game.h ../Core/Inc/constants.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
  ../Core/Inc/FreeRTOSConfig.h \
@@ -91,6 +91,8 @@ Core/Src/game.o: ../Core/Src/game.c ../Core/Inc/main.h \
 ../Core/Inc/ssd1306_conf_template.h:
 ../Core/Inc/ssd1306_fonts.h:
 ../Core/Inc/ssd1306_tests.h:
+../Core/Inc/game.h:
+../Core/Inc/constants.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
 ../Core/Inc/FreeRTOSConfig.h:

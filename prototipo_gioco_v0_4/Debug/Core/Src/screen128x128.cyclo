@@ -1,3 +1,2 @@
-../Core/Src/screen128x128.c:23:6:finalScore_screen	1
-../Core/Src/screen128x128.c:51:6:screen_init	1
-../Core/Src/screen128x128.c:66:6:finalScore_screen_v2	1
+../Core/Src/screen128x128.c:23:6:finalScore_screen	3
+../Core/Src/screen128x128.c:104:6:screen_init	1

@@ -40,6 +40,7 @@ extern const GameNote_t happyBirthday[MELODY_LENGTH];
 extern const GameNote_t jingleBells[MELODY_LENGTH];
 extern const GameNote_t innoAllaGioia[MELODY_LENGTH];
 
+extern char buffer_schermo[32];
 
 typedef struct {  //struct with port and pin associated
     GPIO_TypeDef* port;
@@ -106,6 +107,13 @@ GameNote_t* melodySelection(){
 
 			osDelay(200); //per evitare debounce  bottonui
 			printf("Song %u: %s \r\n", songSelection + 1, nomiCanzoni[songSelection]); //cosi mi dice pure come si chiama la canzone
+
+			//messa per schermetto
+			ssd1306_SetCursor(5, 50);
+			snprintf(buffer_schermo, sizeof(buffer_schermo), "Song %u: %s \r\n", songSelection + 1, nomiCanzoni[songSelection]);
+			ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+			ssd1306_UpdateScreen();
+			osDelay(200);
 			buttonPressed = 0; //lo ho spostato qui
 		}
 		else if (buttonPressed == BLUE_BUTTON){ //in caso in cui premo il blu. torna all'inizio della lista
@@ -126,6 +134,12 @@ GameNote_t* melodySelection(){
 	}
 
 	printf("Song %u selected: %s will now start: \r\n", songSelection + 1 , nomiCanzoni[songSelection]);
+
+	//screen
+	ssd1306_SetCursor(5, 50);
+	snprintf(buffer_schermo, sizeof(buffer_schermo), "Song %u selected: %s will now start: \r\n", songSelection + 1 , nomiCanzoni[songSelection]);
+	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+	ssd1306_UpdateScreen();
 	osDelay(200); //per evitare debounce  bottonui
 
 	selectedSong = libreriaCanzoni[songSelection];
@@ -347,6 +361,6 @@ void gamePlay(void){
 	                          osDelay(1000);
 	                          finalScore(); //print final results
 	                          osDelay(3000); // Aspetta un po' prima di permettere di rigiocare
-	                          //resetScore();
+	                          resetScore();
 	  }
 }
