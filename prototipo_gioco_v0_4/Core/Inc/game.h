@@ -11,6 +11,7 @@
 
 #include <main.h>
 #include "buzzer.h"
+#include "screen128x128.h"
 
 void scoreEvaluate(int timer_value);
 void resetScore(void);

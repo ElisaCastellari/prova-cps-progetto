@@ -11,7 +11,7 @@
 #include "buzzer.h"
 
 int combo = 0; //tiene conto la combo
-int score = 0; //tiene conto dello score
+volatile int score = 0; //tiene conto dello score
 int perfect = 0;
 int great = 0;
 int good = 0;
@@ -214,7 +214,7 @@ void finalScore(void){ //per printare i risultati completi a fine game
 		}
 	}
 	printf("---------------------------------------------------\r\n");
-	resetScore(); // i reset to be ready for a new game
+	//resetScore(); // i reset to be ready for a new game
 }
 
 
@@ -249,7 +249,7 @@ void gamePlay(void){
 	    	            printf("Wrong button! Press the start button.\r\n");
 	    	            buttonPressed = 0;
 	    	       }
-	          osDelay(200); // Usa osDelay per non impallare FreeRTOS (AUMENTATO ALTRIMENTI STAMPAVA PIU VOLTE LA RIGA NELL'IF)
+	          osDelay(300); // Usa osDelay per non impallare FreeRTOS (AUMENTATO ALTRIMENTI STAMPAVA PIU VOLTE LA RIGA NELL'IF)
 	      }
 
 	      buttonPressed = 0; // Resetta per il gioco
@@ -343,7 +343,10 @@ void gamePlay(void){
 	                          printf("\r\n------GAME OVER, THANKS FOR PLAYING!------\r\n");
 	                          //HAL_GPIO_WritePin(array_leds[targetIndex].port, array_leds[targetIndex].pin, GPIO_PIN_RESET);
 	                          //StopTone(); //stops the note
+	                          finalScore_screen(); //con lo screen
+	                          osDelay(1000);
 	                          finalScore(); //print final results
 	                          osDelay(3000); // Aspetta un po' prima di permettere di rigiocare
+	                          //resetScore();
 	  }
 }

@@ -35,6 +35,8 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+I2C_HandleTypeDef hi2c1;
+
 TIM_HandleTypeDef htim2;
 
 UART_HandleTypeDef huart2;
@@ -88,6 +90,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_USART2_UART_Init(void);
+static void MX_I2C1_Init(void);
 void StartGameTask(void const * argument);
 void TimeoutCallback(void const * argument);
 void Callback02(void const * argument);
@@ -146,6 +149,7 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM2_Init();
   MX_USART2_UART_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
   // Leggiamo un valore a caso dalla memoria per inizializzare il random
 
@@ -186,7 +190,7 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of GameTask */
-  osThreadDef(GameTask, StartGameTask, osPriorityNormal, 0, 1024); // impostata a mano a 1024 anzichè 128 sotto consiglio di gemini
+  osThreadDef(GameTask, StartGameTask, osPriorityNormal, 0, 128);
   GameTaskHandle = osThreadCreate(osThread(GameTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
@@ -254,6 +258,40 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+}
+
+/**
+  * @brief I2C1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_I2C1_Init(void)
+{
+
+  /* USER CODE BEGIN I2C1_Init 0 */
+
+  /* USER CODE END I2C1_Init 0 */
+
+  /* USER CODE BEGIN I2C1_Init 1 */
+
+  /* USER CODE END I2C1_Init 1 */
+  hi2c1.Instance = I2C1;
+  hi2c1.Init.ClockSpeed = 400000;
+  hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
+  hi2c1.Init.OwnAddress1 = 0;
+  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c1.Init.OwnAddress2 = 0;
+  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+  if (HAL_I2C_Init(&hi2c1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN I2C1_Init 2 */
+
+  /* USER CODE END I2C1_Init 2 */
+
 }
 
 /**
@@ -450,6 +488,7 @@ void StartGameTask(void const * argument)
      // printf("\r\n=== RHYTHM GAME PROTOTYPE ===\r\n");
 
       //melody = melodySelection();
+	screen_init();
       gamePlay();
 
       //printf("Press the BLUE button to start\r\n");
@@ -477,8 +516,6 @@ void Callback02(void const * argument)
 
   /* USER CODE END Callback02 */
 }
-
-
 
 /**
   * @brief  Period elapsed callback in non blocking mode

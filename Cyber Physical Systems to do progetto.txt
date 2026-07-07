@@ -39,6 +39,8 @@ DONE	quando seleziono la canzone subito dopo da wrong button in automatico
 
 DONE	si blocca in song selection se schiaccio il bottone blu
 
+Se quando finisce una canzone non aspetti abbastanza si blocca. Scrive song 1 poi wrong button poi di nuovo song 1 poi puoi andare
+
 
 
 
