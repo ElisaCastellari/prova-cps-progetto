@@ -136,7 +136,10 @@ void clean_screen(void){ //così invece che scrivere 3 righe ne scrivo una sola
 }
 
 void score_screen_print(char* songToPlay, char* feedback){
-	clean_screen(); //pulisco ogni volta
+	//clean_screen(); //pulisco ogni volta
+	ssd1306_FillRectangle(ORIGIN_X ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*3) ,126 ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*3 + TITLE_Y), Black); // cancello feedback
+	ssd1306_FillRectangle(ORIGIN_X ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*6) ,126 ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*7 + FONT_Y), Black); // cancello feedback
+
 
 	//canzone da fare
 	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*0) ); // prima riga
