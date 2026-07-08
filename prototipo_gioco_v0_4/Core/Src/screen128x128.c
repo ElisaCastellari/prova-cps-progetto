@@ -121,10 +121,11 @@ void screen_init(void){
     //ssd1306_DrawRectangle(0, 0, 127, 127, White);
     clean_screen();
 
-    ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*0) ); // prima riga
-    ssd1306_WriteString("RHYTHM GAME PROTOTYPE",Font_7x10, White);
+    ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (TITLE_Y + TITLE_SPACE)*0) ); // prima riga
+    ssd1306_WriteString("RHYTHM GAME",Font_11x18, White);
 
-
+    ssd1306_SetCursor(14, (ORIGIN_Y + (TITLE_Y + TITLE_SPACE)*1) ); // seconda riga
+    ssd1306_WriteString("PROTOTYPE",Font_11x18, White);
     ssd1306_UpdateScreen();
 }
 

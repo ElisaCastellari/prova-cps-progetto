@@ -81,20 +81,22 @@ GameNote_t* melodySelection(){
 	printf("Press yellow button to go back, green to go on and red to select\r\n");
 
 	//screen
-	ssd1306_SetCursor(5, 25);
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*0) ); // prima riga
 	ssd1306_WriteString("SONG SELECTION:",Font_7x10, White);
 
 	GameNote_t* selectedSong;
 	songSelection = 0;
 
 	//screen
-	ssd1306_SetCursor(5, 50);
+	ssd1306_FillRectangle(ORIGIN_X ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*1) ,126 ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*1 + FONT_Y), Black); // cancello seconda riga
+
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*1) ); // seconda riga
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "Song %u:", songSelection + 1);
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 
-	ssd1306_FillRectangle(5 ,65 ,126 ,75, Black);
+	ssd1306_FillRectangle(ORIGIN_X ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*2) ,126 ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*2 + FONT_Y), Black); // cancello terza riga
 
-	ssd1306_SetCursor(5, 65);
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*2)); // terza riga
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", nomiCanzoni[songSelection]);
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 	ssd1306_UpdateScreen();
@@ -131,14 +133,17 @@ GameNote_t* melodySelection(){
 			osDelay(200); //per evitare debounce  bottonui
 			printf("Song %u: %s \r\n", songSelection + 1, nomiCanzoni[songSelection]); //cosi mi dice pure come si chiama la canzone
 
+			ssd1306_FillRectangle(ORIGIN_X ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*1) ,126 ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*1 + FONT_Y), Black); // cancello seconda riga
+
+
 			//messa per schermetto
-			ssd1306_SetCursor(5, 50);
+			ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*1) ); // seconda riga
 			snprintf(buffer_schermo, sizeof(buffer_schermo), "Song %u:", songSelection + 1);
 			ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 
-			ssd1306_FillRectangle(5 ,65 ,126 ,75, Black);
+			ssd1306_FillRectangle(ORIGIN_X ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*2) ,126 ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*2 + FONT_Y), Black); // cancello terza riga
 
-			ssd1306_SetCursor(5, 65);
+			ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*2) ); // terza riga
 			snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", nomiCanzoni[songSelection]);
 			ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 			ssd1306_UpdateScreen();
@@ -153,14 +158,17 @@ GameNote_t* melodySelection(){
 			osDelay(200);
 			printf("Song %u: %s \r\n", songSelection + 1, nomiCanzoni[songSelection]);
 
+			ssd1306_FillRectangle(ORIGIN_X ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*1) ,126 ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*1 + FONT_Y), Black); // cancello seconda riga
+
+
 			//screen
-			ssd1306_SetCursor(5, 50);
+			ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*1) ); // seconda riga
 			snprintf(buffer_schermo, sizeof(buffer_schermo), "Song %u:", songSelection + 1);
 			ssd1306_WriteString(buffer_schermo,Font_7x10, White);
-			ssd1306_SetCursor(5, 65);
 
-			ssd1306_FillRectangle(5 ,65 ,126 ,75, Black);
+			ssd1306_FillRectangle(ORIGIN_X ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*2) ,126 ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*2 + FONT_Y), Black); // cancello terza riga
 
+			ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*2) ); // terza riga
 			snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", nomiCanzoni[songSelection]);
 			ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 			ssd1306_UpdateScreen();
@@ -179,19 +187,17 @@ GameNote_t* melodySelection(){
 	printf("Song %u selected: %s will now start: \r\n", songSelection + 1 , nomiCanzoni[songSelection]);
 
 	//screen
-	ssd1306_SetCursor(5, 50);
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*3) ); // quarta riga
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "Song %u selected:", songSelection + 1);
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 
-	ssd1306_FillRectangle(5 ,65 ,126 ,75, Black);
-
-	ssd1306_SetCursor(5, 65);
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*4) ); // quinta riga
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", nomiCanzoni[songSelection]);
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
-	ssd1306_SetCursor(5, 80);
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*5) ); // sesta riga
 	ssd1306_WriteString("will now start:",Font_7x10, White);
 	ssd1306_UpdateScreen();
-	osDelay(200); //per evitare debounce  bottonui
+	osDelay(200); //per evitare debounce  bottoni
 
 	selectedSong = libreriaCanzoni[songSelection];
 

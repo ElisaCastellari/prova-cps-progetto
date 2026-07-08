@@ -7,7 +7,7 @@
 ../Core/Src/main.c:394:13:MX_GPIO_Init	1
 ../Core/Src/main.c:448:6:HAL_GPIO_EXTI_Callback	5
 ../Core/Src/main.c:480:6:StartGameTask	1
-../Core/Src/main.c:503:6:TimeoutCallback	1
-../Core/Src/main.c:513:6:Callback02	1
-../Core/Src/main.c:528:6:HAL_TIM_PeriodElapsedCallback	2
-../Core/Src/main.c:546:6:Error_Handler	1
+../Core/Src/main.c:504:6:TimeoutCallback	1
+../Core/Src/main.c:514:6:Callback02	1
+../Core/Src/main.c:529:6:HAL_TIM_PeriodElapsedCallback	2
+../Core/Src/main.c:547:6:Error_Handler	1
