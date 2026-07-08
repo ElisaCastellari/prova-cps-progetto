@@ -91,6 +91,9 @@ GameNote_t* melodySelection(){
 	ssd1306_SetCursor(5, 50);
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "Song %u:", songSelection + 1);
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+
+	ssd1306_FillRectangle(5 ,65 ,126 ,75, Black);
+
 	ssd1306_SetCursor(5, 65);
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", nomiCanzoni[songSelection]);
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
@@ -132,6 +135,9 @@ GameNote_t* melodySelection(){
 			ssd1306_SetCursor(5, 50);
 			snprintf(buffer_schermo, sizeof(buffer_schermo), "Song %u:", songSelection + 1);
 			ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+
+			ssd1306_FillRectangle(5 ,65 ,126 ,75, Black);
+
 			ssd1306_SetCursor(5, 65);
 			snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", nomiCanzoni[songSelection]);
 			ssd1306_WriteString(buffer_schermo,Font_7x10, White);
@@ -152,6 +158,9 @@ GameNote_t* melodySelection(){
 			snprintf(buffer_schermo, sizeof(buffer_schermo), "Song %u:", songSelection + 1);
 			ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 			ssd1306_SetCursor(5, 65);
+
+			ssd1306_FillRectangle(5 ,65 ,126 ,75, Black);
+
 			snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", nomiCanzoni[songSelection]);
 			ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 			ssd1306_UpdateScreen();
@@ -173,6 +182,9 @@ GameNote_t* melodySelection(){
 	ssd1306_SetCursor(5, 50);
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "Song %u selected:", songSelection + 1);
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+
+	ssd1306_FillRectangle(5 ,65 ,126 ,75, Black);
+
 	ssd1306_SetCursor(5, 65);
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", nomiCanzoni[songSelection]);
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
