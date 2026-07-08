@@ -17,4 +17,10 @@
 #define NUM_BUTTONS 3
 #define BLUE_BUTTON 99
 
+#define ORIGIN_X 5
+#define ORIGIN_Y 5
+#define FONT_X 7
+#define FONT_Y 10
+#define ROW_SPACE (FONT_Y/2)
+
 #endif /* INC_CONSTANTS_H_ */

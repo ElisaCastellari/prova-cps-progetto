@@ -29,24 +29,27 @@ void finalScore_screen(void){ //per printare i risultati completi a fine game
 
 	clean_screen();
 
-	ssd1306_SetCursor(5, 5);
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*0) ); // prima riga
 	ssd1306_WriteString("FINAL RESULTS:",Font_7x10, White);
-	printf("\n\n\nScore su Seriale: %i\r\n\n\n", score);
+	//printf("\n\n\nScore su Seriale: %i\r\n\n\n", score);
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "Score: %i", score);
-	ssd1306_SetCursor(5, 20);
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*1) ); // seconda riga moltiplicato per 1 salta la prima riga siccome è la seconda riga
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "Best Combo: %i", bestCombo);
-	ssd1306_SetCursor(5, 35);
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*2) );  // terza riga
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "Average response time: %i", (int)(avgResponseTime / hitNotes)); //average response time, casted as int for semplicity
 		if (bestCombo == SONGLENGHT){
-			ssd1306_SetCursor(5, 50);
+
+			ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*3) ); // quarta riga
 			snprintf(buffer_schermo, sizeof(buffer_schermo), "Full combo!");
 			ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+
 			if (perfect == SONGLENGHT){
-				ssd1306_SetCursor(5, 65);
+
+				ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*4) ); // quinta riga
 				snprintf (buffer_schermo, sizeof(buffer_schermo), "all perfect!");
 				ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 			}
@@ -54,35 +57,35 @@ void finalScore_screen(void){ //per printare i risultati completi a fine game
 
 		ssd1306_UpdateScreen();
 
-	osDelay(5000);
+	HAL_Delay(5000);
 		//ssd1306_Fill(Black);       // Svuota la memoria cancellando tutti i pixel
 		//ssd1306_DrawRectangle(0, 0, 127, 127, White);
 		//ssd1306_UpdateScreen();    // Invia il comando allo schermo fisico per spegnerlo
 	clean_screen();
-	osDelay(200);
+	HAL_Delay(200);
 
 
-	ssd1306_SetCursor(5, 5);
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*0) ); // prima riga
 	ssd1306_WriteString("RESULTS DETAILS:",Font_7x10, White);
 
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "PERFECT: %i", perfect);
-	ssd1306_SetCursor(5, 20);
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*1) ); // seconda riga
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "GREAT: %i", great);
-	ssd1306_SetCursor(5, 35);
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*2) ); // terza riga
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "GOOD: %i", good);
-	ssd1306_SetCursor(5, 50);
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*3) ); // quarta riga
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "BAD: %i", bad);
-	ssd1306_SetCursor(5, 65);
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*4) ); // quinta riga
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "MISS: %i", miss);
-	ssd1306_SetCursor(5, 80);
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*5) ); // sesta riga
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 	/*printf("Score: %i\r\n", score);
 	printf("Best Combo: %i\r\n", bestCombo);
@@ -118,7 +121,7 @@ void screen_init(void){
     //ssd1306_DrawRectangle(0, 0, 127, 127, White);
     clean_screen();
 
-    ssd1306_SetCursor(5, 5);
+    ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*0) ); // prima riga
     ssd1306_WriteString("RHYTHM GAME PROTOTYPE",Font_7x10, White);
 
 
@@ -134,17 +137,17 @@ void clean_screen(void){ //così invece che scrivere 3 righe ne scrivo una sola
 void score_screen_print(char* songToPlay){
 	clean_screen();
 
-	ssd1306_SetCursor(5, 5);
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*0) ); // prima riga
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", songToPlay);
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 	//combo
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "COMBO: %i", combo);
-	ssd1306_SetCursor(5, 80);
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*6) ); // settima riga
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 
 	//score
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "SCORE: %i", score);
-	ssd1306_SetCursor(5, 100);
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*7) ); // ottava riga
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 	ssd1306_UpdateScreen(); //vedo se spostare alla fine di gameTask nel loop
 }
