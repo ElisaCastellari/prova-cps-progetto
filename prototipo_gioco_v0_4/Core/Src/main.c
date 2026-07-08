@@ -490,7 +490,7 @@ void StartGameTask(void const * argument)
       //melody = melodySelection();
 	screen_init();
 	osDelay(3000);
-      gamePlay();
+    gamePlay();
 
       //printf("Press the BLUE button to start\r\n");
 

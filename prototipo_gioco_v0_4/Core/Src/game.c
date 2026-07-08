@@ -21,7 +21,8 @@ int bestCombo = 0; //to keep track of the best combo
 float avgResponseTime = 0; //to make average response time later
 int hitNotes = 0;  // to sum all hit notes and make average
 
-char* songName;
+char* songName; //per passare il nome del song
+char* noteFeedback; //per dire quanto bene ho fatto
 
 
 extern uint8_t buttonPressed ; // 0 se non premuto, 1 se premuto
@@ -187,15 +188,17 @@ GameNote_t* melodySelection(){
 	printf("Song %u selected: %s will now start: \r\n", songSelection + 1 , nomiCanzoni[songSelection]);
 
 	//screen
-	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*3) ); // quarta riga
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*1) ); // seconda riga
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "Song %u selected:", songSelection + 1);
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 
-	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*4) ); // quinta riga
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*2) ); // terza riga
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", nomiCanzoni[songSelection]);
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
-	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*5) ); // sesta riga
-	ssd1306_WriteString("will now start:",Font_7x10, White);
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*5) ); //sesta riga
+	ssd1306_WriteString("Press BLUE button",Font_7x10, White);
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*6) ); // settima riga
+	ssd1306_WriteString("to start",Font_7x10, White);
 	ssd1306_UpdateScreen();
 	osDelay(200); //per evitare debounce  bottoni
 
@@ -229,6 +232,7 @@ void scoreEvaluate(int timer_value){ //per valutare
     if (timer_value == MISSVALUE){
         combo = 0;
         printf("miss.\r\n");
+        noteFeedback = "MISS";
         miss++;
     }
     else{
@@ -237,24 +241,28 @@ void scoreEvaluate(int timer_value){ //per valutare
 
      if(timer_value < PERFECT_TRESHOLD * DIFFICULTY){
      	printf("PERFECT\r\n");
+     	noteFeedback = "PERFECT";
      	score += 500;
      	combo++;
      	perfect++;
      }
      else if(timer_value < PERFECT_TRESHOLD*2 * DIFFICULTY){
      	printf("GREAT\r\n");
+     	noteFeedback = "GREAT";
      	score += 300;
      	combo++;
      	great++;
      }
      else if(timer_value < PERFECT_TRESHOLD*3 * DIFFICULTY){
      	printf("GOOD\r\n");
+     	noteFeedback = "GOOD";
      	score += 150;
      	combo++;
      	good++;
      }
      else{
      	printf("BAD\r\n");
+     	noteFeedback = "BAD";
      	combo = 0;
      	score += 50;
      	bad++;
@@ -265,7 +273,7 @@ void scoreEvaluate(int timer_value){ //per valutare
 	}
 
 	//screen
-	 score_screen_print(songName);
+	 score_screen_print(songName, noteFeedback);
 
      printf("your combo is %i, score %i.\r\n", combo, score);
 

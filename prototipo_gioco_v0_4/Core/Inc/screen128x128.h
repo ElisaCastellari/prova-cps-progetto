@@ -18,6 +18,6 @@
 void finalScore_screen(void);
 void screen_init(void);
 void clean_screen(void);
-void score_screen_print(char* songToPlay);
+void score_screen_print(char* songToPlay, char* feedback);
 
 #endif /* INC_SCREEN128X128_H_ */

@@ -135,12 +135,18 @@ void clean_screen(void){ //così invece che scrivere 3 righe ne scrivo una sola
 	ssd1306_UpdateScreen();
 }
 
-void score_screen_print(char* songToPlay){
-	clean_screen();
+void score_screen_print(char* songToPlay, char* feedback){
+	clean_screen(); //pulisco ogni volta
 
+	//canzone da fare
 	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*0) ); // prima riga
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", songToPlay);
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+
+	//feedback
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*3) ); // quarta riga
+	snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", feedback);
+	ssd1306_WriteString(buffer_schermo,Font_11x18, White);
 	//combo
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "COMBO: %i", combo);
 	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*6) ); // settima riga
