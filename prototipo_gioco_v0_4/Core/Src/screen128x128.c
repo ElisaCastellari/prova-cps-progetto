@@ -18,13 +18,16 @@ extern int bestCombo; //to keep track of the best combo
 extern float avgResponseTime; //to make average response time later
 extern int hitNotes;  // to sum all hit notes and make average
 
+
 #include "screen128x128.h"
 
 void finalScore_screen(void){ //per printare i risultati completi a fine game
 
-	ssd1306_Fill(Black);       // Svuota la memoria cancellando tutti i pixel
-	ssd1306_DrawRectangle(0, 0, 127, 127, White);
-	ssd1306_UpdateScreen();
+	//ssd1306_Fill(Black);       // Svuota la memoria cancellando tutti i pixel
+	//ssd1306_DrawRectangle(0, 0, 127, 127, White);
+	//ssd1306_UpdateScreen();
+
+	clean_screen();
 
 	ssd1306_SetCursor(5, 5);
 	ssd1306_WriteString("FINAL RESULTS:",Font_7x10, White);
@@ -52,11 +55,11 @@ void finalScore_screen(void){ //per printare i risultati completi a fine game
 		ssd1306_UpdateScreen();
 
 	osDelay(5000);
-		ssd1306_Fill(Black);       // Svuota la memoria cancellando tutti i pixel
-		ssd1306_DrawRectangle(0, 0, 127, 127, White);
-		ssd1306_UpdateScreen();    // Invia il comando allo schermo fisico per spegnerlo
-
-		osDelay(200);
+		//ssd1306_Fill(Black);       // Svuota la memoria cancellando tutti i pixel
+		//ssd1306_DrawRectangle(0, 0, 127, 127, White);
+		//ssd1306_UpdateScreen();    // Invia il comando allo schermo fisico per spegnerlo
+	clean_screen();
+	osDelay(200);
 
 
 	ssd1306_SetCursor(5, 5);
@@ -111,8 +114,9 @@ void screen_init(void){
     HAL_I2C_Master_Transmit(&hi2c1, (0x3C << 1), sh1107_patch, sizeof(sh1107_patch), 100);
 
     // 3. Disegniamo un rettangolo sui bordi per verificare la centratura
-    ssd1306_Fill(Black);
-    ssd1306_DrawRectangle(0, 0, 127, 127, White);
+    //ssd1306_Fill(Black);
+    //ssd1306_DrawRectangle(0, 0, 127, 127, White);
+    clean_screen();
 
     ssd1306_SetCursor(5, 5);
     ssd1306_WriteString("RHYTHM GAME PROTOTYPE",Font_7x10, White);
@@ -120,4 +124,29 @@ void screen_init(void){
 
     ssd1306_UpdateScreen();
 }
+
+void clean_screen(void){ //così invece che scrivere 3 righe ne scrivo una sola
+	ssd1306_Fill(Black);
+	ssd1306_DrawRectangle(0, 0, 127, 127, White);
+	ssd1306_UpdateScreen();
+}
+
+void score_screen_print(char* songToPlay){
+	clean_screen();
+
+	ssd1306_SetCursor(5, 5);
+	snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", songToPlay);
+	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+	//combo
+	snprintf(buffer_schermo, sizeof(buffer_schermo), "COMBO: %i", combo);
+	ssd1306_SetCursor(5, 80);
+	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+
+	//score
+	snprintf(buffer_schermo, sizeof(buffer_schermo), "SCORE: %i", score);
+	ssd1306_SetCursor(5, 100);
+	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+	ssd1306_UpdateScreen(); //vedo se spostare alla fine di gameTask nel loop
+}
+
 

@@ -21,6 +21,8 @@ int bestCombo = 0; //to keep track of the best combo
 float avgResponseTime = 0; //to make average response time later
 int hitNotes = 0;  // to sum all hit notes and make average
 
+char* songName;
+
 
 extern uint8_t buttonPressed ; // 0 se non premuto, 1 se premuto
 extern uint8_t timeoutOccurred ; // missed input
@@ -73,10 +75,28 @@ extern HardwareElement_t array_bottoni[NUM_BUTTONS];
 
 
 GameNote_t* melodySelection(){
+	clean_screen();
+
 	printf("---------------------Song Selection Menu:-----------------------\r\n");
 	printf("Press yellow button to go back, green to go on and red to select\r\n");
+
+	//screen
+	ssd1306_SetCursor(5, 25);
+	ssd1306_WriteString("SONG SELECTION:",Font_7x10, White);
+
 	GameNote_t* selectedSong;
 	songSelection = 0;
+
+	//screen
+	ssd1306_SetCursor(5, 50);
+	snprintf(buffer_schermo, sizeof(buffer_schermo), "Song %u:", songSelection + 1);
+	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+	ssd1306_SetCursor(5, 65);
+	snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", nomiCanzoni[songSelection]);
+	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+	ssd1306_UpdateScreen();
+
+	osDelay(200);
 	printf("Song %u: %s \r\n", songSelection + 1, nomiCanzoni[songSelection]); //cosi mi dice pure come si chiama la canzone
 	while(1) {
 		//printf("Song %u: %s \r\n", songSelection + 1, nomiCanzoni[songSelection]); //cosi mi dice pure come si chiama la canzone
@@ -110,9 +130,13 @@ GameNote_t* melodySelection(){
 
 			//messa per schermetto
 			ssd1306_SetCursor(5, 50);
-			snprintf(buffer_schermo, sizeof(buffer_schermo), "Song %u: %s \r\n", songSelection + 1, nomiCanzoni[songSelection]);
+			snprintf(buffer_schermo, sizeof(buffer_schermo), "Song %u:", songSelection + 1);
+			ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+			ssd1306_SetCursor(5, 65);
+			snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", nomiCanzoni[songSelection]);
 			ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 			ssd1306_UpdateScreen();
+
 			osDelay(200);
 			buttonPressed = 0; //lo ho spostato qui
 		}
@@ -122,6 +146,15 @@ GameNote_t* melodySelection(){
 			buttonPressed = 0;
 			osDelay(200);
 			printf("Song %u: %s \r\n", songSelection + 1, nomiCanzoni[songSelection]);
+
+			//screen
+			ssd1306_SetCursor(5, 50);
+			snprintf(buffer_schermo, sizeof(buffer_schermo), "Song %u:", songSelection + 1);
+			ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+			ssd1306_SetCursor(5, 65);
+			snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", nomiCanzoni[songSelection]);
+			ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+			ssd1306_UpdateScreen();
 
 		}
 		else if (buttonPressed != 0){
@@ -133,12 +166,18 @@ GameNote_t* melodySelection(){
 		//buttonPressed = 0;
 	}
 
+	songName = nomiCanzoni[songSelection];
 	printf("Song %u selected: %s will now start: \r\n", songSelection + 1 , nomiCanzoni[songSelection]);
 
 	//screen
 	ssd1306_SetCursor(5, 50);
-	snprintf(buffer_schermo, sizeof(buffer_schermo), "Song %u selected: %s will now start: \r\n", songSelection + 1 , nomiCanzoni[songSelection]);
+	snprintf(buffer_schermo, sizeof(buffer_schermo), "Song %u selected:", songSelection + 1);
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+	ssd1306_SetCursor(5, 65);
+	snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", nomiCanzoni[songSelection]);
+	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+	ssd1306_SetCursor(5, 80);
+	ssd1306_WriteString("will now start:",Font_7x10, White);
 	ssd1306_UpdateScreen();
 	osDelay(200); //per evitare debounce  bottonui
 
@@ -206,6 +245,10 @@ void scoreEvaluate(int timer_value){ //per valutare
 	if (combo >= bestCombo){ //for later evaluations of the combo
 		bestCombo = combo;
 	}
+
+	//screen
+	 score_screen_print(songName);
+
      printf("your combo is %i, score %i.\r\n", combo, score);
 
 }
