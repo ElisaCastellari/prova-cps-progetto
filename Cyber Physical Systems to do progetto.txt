@@ -5,7 +5,7 @@ DONE	main.c 426: se premo il tasto blu mentre è già partita una traccia faccio
 	se premi un tasto a caso e non quello sulla board inizia lo stesso, da sistemare.
 	INOLTRE NON DA NESSUN RISULTATO, NON SEGNA IL MISS DKCE SOLO ERRORE E NON HA EFFETTO SULLO SCORE
 
-main.c 478: Non usare SONGLENGHT ma sizeof(melody) e inoltre sostituirla in tutti i file
+DONE	main.c 478: Non usare SONGLENGHT ma sizeof(melody) e inoltre sostituirla in tutti i file
 
 DONE	main.c 479: spostare prima dichiarazione di targetIndex prima di questa riga perché inizia
 	sempre il primo

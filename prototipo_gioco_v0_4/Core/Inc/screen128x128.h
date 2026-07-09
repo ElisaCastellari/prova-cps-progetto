@@ -13,6 +13,7 @@
 #include "ssd1306_tests.h" // <-- Aggiunge le animazioni (risolve l'errore 2)
 #include "game.h"
 #include "constants.h"
+#include "buzzer.h"
 #include <stdio.h>
 
 void finalScore_screen(void);

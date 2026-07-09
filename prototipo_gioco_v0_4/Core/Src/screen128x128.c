@@ -4,8 +4,10 @@
  *  Created on: 7 lug 2026
  *      Author: elyca
  */
-char buffer_schermo[128];
 
+#include "screen128x128.h"
+
+char buffer_schermo[128];
 
 extern int combo; //tiene conto la combo
 extern volatile int score; //tiene conto dello score
@@ -17,9 +19,9 @@ extern int miss;
 extern int bestCombo; //to keep track of the best combo
 extern float avgResponseTime; //to make average response time later
 extern int hitNotes;  // to sum all hit notes and make average
+extern const GameNote_t* melody;
 
 
-#include "screen128x128.h"
 
 void finalScore_screen(void){ //per printare i risultati completi a fine game
 
@@ -54,13 +56,13 @@ void finalScore_screen(void){ //per printare i risultati completi a fine game
 
 
 
-		if (bestCombo == SONGLENGHT){
+		if (bestCombo == sizeof(melody)){
 
 			ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*6) ); // settima riga
 			snprintf(buffer_schermo, sizeof(buffer_schermo), "Full combo!");
 			ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 
-			if (perfect == SONGLENGHT){
+			if (perfect == sizeof(melody)){
 
 				ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*7) ); // ottava riga
 				snprintf (buffer_schermo, sizeof(buffer_schermo), "all perfect!");

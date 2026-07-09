@@ -1,7 +1,7 @@
 #include "buzzer.h"
 
 // 2. CREIAMO LA CANZONE (Array di struct!)
-const GameNote_t innoAllaGioia[MELODY_LENGTH] = { //inno alla gioia
+const GameNote_t innoAllaGioia[] = { //inno alla gioia
     {NOTE_E4, 1000}, // Prima nota: aspetta 1 secondo, poi fai MI
     {NOTE_E4, 500},  // Seconda nota: aspetta mezzo secondo, poi fai MI
     {NOTE_F4, 500},  // aspetta mezzo secondo, fai FA
@@ -19,7 +19,7 @@ const GameNote_t innoAllaGioia[MELODY_LENGTH] = { //inno alla gioia
     {NOTE_D4, 1000}  // Nota finale lunga
 };
 
-const GameNote_t superMario[MELODY_LENGTH] = { //super mario
+const GameNote_t superMario[] = { //super mario
     {NOTE_E5, 150}, // Mi
     {NOTE_E5, 300}, // Mi
     {NOTE_E5, 300}, // Mi
@@ -37,7 +37,7 @@ const GameNote_t superMario[MELODY_LENGTH] = { //super mario
     {NOTE_G4, 200}  // Sol
 };
 
-const GameNote_t jingleBells[MELODY_LENGTH] = { //jingle bells
+const GameNote_t jingleBells[] = { //jingle bells
     {NOTE_E4, 250},  // Jin-
     {NOTE_E4, 250},  // gle
     {NOTE_E4, 500},  // bells
@@ -55,7 +55,7 @@ const GameNote_t jingleBells[MELODY_LENGTH] = { //jingle bells
     {NOTE_F4, 125}   // it...
 };
 
-const GameNote_t happyBirthday[MELODY_LENGTH] = { //happy birthday
+const GameNote_t happyBirthday[] = { //happy birthday
     {NOTE_G4, 250},  // Tan-
     {NOTE_G4, 250},  // ti
     {NOTE_A4, 500},  // au-
@@ -73,7 +73,7 @@ const GameNote_t happyBirthday[MELODY_LENGTH] = { //happy birthday
     {NOTE_G5, 500}   // au...
 };
 
-const GameNote_t starWars[MELODY_LENGTH] = {// star wars
+const GameNote_t starWars[] = {// star wars
     {NOTE_D4, 200}, // Ta
     {NOTE_D4, 200}, // Ta
     {NOTE_D4, 200}, // Ta

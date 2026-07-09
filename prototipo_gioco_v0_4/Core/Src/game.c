@@ -37,11 +37,11 @@ extern TIM_HandleTypeDef htim2;
 extern uint8_t songSelection;
 
 //my songs
-extern const GameNote_t superMario[MELODY_LENGTH];
-extern const GameNote_t starWars[MELODY_LENGTH];
-extern const GameNote_t happyBirthday[MELODY_LENGTH];
-extern const GameNote_t jingleBells[MELODY_LENGTH];
-extern const GameNote_t innoAllaGioia[MELODY_LENGTH];
+extern const GameNote_t superMario[];
+extern const GameNote_t starWars[];
+extern const GameNote_t happyBirthday[];
+extern const GameNote_t jingleBells[];
+extern const GameNote_t innoAllaGioia[];
 
 extern char buffer_schermo[32];
 
@@ -296,9 +296,9 @@ void finalScore(void){ //per printare i risultati completi a fine game
 		printf("It was not possible to evaluate your response time \r\n");
 	}
 
-	if (bestCombo == SONGLENGHT){
+	if (bestCombo == sizeof(melody)){
 		printf("Full combo! \r\n");
-		if (perfect == SONGLENGHT){
+		if (perfect == sizeof(melody)){
 			printf ("all perfect!\r\n");
 		}
 	}
@@ -347,7 +347,7 @@ void gamePlay(void){
 	      uint8_t currentNoteIndex = 0; //to keep track of the melody
 
 	      // 2. Ciclo della Canzone
-	      for(int i = 0; i < SONGLENGHT; i++){
+	      for(int i = 0; i < sizeof(melody); i++){
 	    	  srand(osKernelSysTick());
 	    	  targetIndex = rand() % NUM_BUTTONS;
 	    	  HAL_GPIO_WritePin(array_leds[targetIndex].port, array_leds[targetIndex].pin, GPIO_PIN_RESET);
@@ -371,7 +371,7 @@ void gamePlay(void){
 	                   // PlayTone(melody[currentNoteIndex]); //plays the note
 	                    PlayTone(melody[currentNoteIndex].frequency);
 	                    currentNoteIndex ++; //increment
-	                    if (currentNoteIndex >= MELODY_LENGTH) {
+	                    if (currentNoteIndex >= sizeof(melody)) {
 	                                  currentNoteIndex = 0;
 	                        }
 	                    printf("PREMI IL BOTTONE %d!\r\n", targetIndex);

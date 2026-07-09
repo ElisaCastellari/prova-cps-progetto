@@ -10,7 +10,8 @@
 
 #define PERFECT_TRESHOLD 	300
 #define MISSVALUE 			9999
-#define SONGLENGHT 			15
+//#define SONGLENGHT 			15
+//#define MELODY_LENGTH		15
 #define DIFFICULTY 			1
 #define VOLUME 				2
 
