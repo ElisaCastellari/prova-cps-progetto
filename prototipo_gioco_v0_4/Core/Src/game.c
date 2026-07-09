@@ -357,7 +357,7 @@ void gamePlay(void){
 	          // Pausa casuale
 	        //  osDelay((rand() % SECONDS) + SECONDS_OFFSET);
 	          // 1. Aspetta il tempo dettato dallo spartito per questa specifica nota
-	                 osDelay(melody[currentNoteIndex].waitTime  * DIFFICULTY);
+	                // osDelay(melody[currentNoteIndex].waitTime  * DIFFICULTY);
 	          // Prepariamo le variabili per questo round
 	          buttonPressed = 0;
 	                    timeoutOccurred = 0;
@@ -377,7 +377,7 @@ void gamePlay(void){
 	                    printf("PREMI IL BOTTONE %d!\r\n", targetIndex);
 
 	                    startTime = osKernelSysTick();
-	                    osTimerStart(TimeoutTimerHandle, 2000 * DIFFICULTY);
+	                    osTimerStart(TimeoutTimerHandle, melody[currentNoteIndex-1].waitTime * DIFFICULTY);
 
 	                    // 3. Aspetta il click...
 	                    while(buttonPressed == 0 && timeoutOccurred == 0) {

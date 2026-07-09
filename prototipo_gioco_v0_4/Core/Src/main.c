@@ -43,7 +43,6 @@ UART_HandleTypeDef huart2;
 
 osThreadId GameTaskHandle;
 osTimerId TimeoutTimerHandle;
-osTimerId myTimer02Handle;
 /* USER CODE BEGIN PV */
 
 typedef struct {  //struct with port and pin associated
@@ -93,7 +92,6 @@ static void MX_USART2_UART_Init(void);
 static void MX_I2C1_Init(void);
 void StartGameTask(void const * argument);
 void TimeoutCallback(void const * argument);
-void Callback02(void const * argument);
 
 /* USER CODE BEGIN PFP */
 #ifdef __GNUC__
@@ -176,10 +174,6 @@ int main(void)
   osTimerDef(TimeoutTimer, TimeoutCallback);
   TimeoutTimerHandle = osTimerCreate(osTimer(TimeoutTimer), osTimerOnce, NULL);
 
-  /* definition and creation of myTimer02 */
-  osTimerDef(myTimer02, Callback02);
-  myTimer02Handle = osTimerCreate(osTimer(myTimer02), osTimerPeriodic, NULL);
-
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
@@ -190,7 +184,7 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of GameTask */
-  osThreadDef(GameTask, StartGameTask, osPriorityNormal, 0, 1024); //era di nuovo 128!!! colpa di gubemx
+  osThreadDef(GameTask, StartGameTask, osPriorityNormal, 0, 1024);
   GameTaskHandle = osThreadCreate(osThread(GameTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
@@ -508,14 +502,6 @@ void TimeoutCallback(void const * argument)
 	timeoutOccurred = 1;
 	//StopTone(); //resetto suono per andare avanti
   /* USER CODE END TimeoutCallback */
-}
-
-/* Callback02 function */
-void Callback02(void const * argument)
-{
-  /* USER CODE BEGIN Callback02 */
-
-  /* USER CODE END Callback02 */
 }
 
 /**
