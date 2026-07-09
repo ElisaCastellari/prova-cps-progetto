@@ -40,16 +40,29 @@ void finalScore_screen(void){ //per printare i risultati completi a fine game
 	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*2) );  // terza riga
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 
-	snprintf(buffer_schermo, sizeof(buffer_schermo), "Average response time: %i", (int)(avgResponseTime / hitNotes)); //average response time, casted as int for semplicity
+	//response time. era dimenticato prima
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*3) );  // quarta riga
+	ssd1306_WriteString("Average response",Font_7x10, White);
+
+	if(hitNotes != 0){ //per evitare divisioni per zero
+		snprintf(buffer_schermo, sizeof(buffer_schermo), "time: %i", (int)(avgResponseTime / hitNotes)); //average response time, casted as int for semplicity
+	} else {
+		snprintf(buffer_schermo, sizeof(buffer_schermo),"time : ERROR"); //se tutto errato
+	}
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*4) );  // quinta riga
+	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+
+
+
 		if (bestCombo == SONGLENGHT){
 
-			ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*3) ); // quarta riga
+			ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*6) ); // settima riga
 			snprintf(buffer_schermo, sizeof(buffer_schermo), "Full combo!");
 			ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 
 			if (perfect == SONGLENGHT){
 
-				ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*4) ); // quinta riga
+				ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*7) ); // ottava riga
 				snprintf (buffer_schermo, sizeof(buffer_schermo), "all perfect!");
 				ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 			}
@@ -160,6 +173,7 @@ void score_screen_print(char* songToPlay, char* feedback){
 	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*7) ); // ottava riga
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 	ssd1306_UpdateScreen(); //vedo se spostare alla fine di gameTask nel loop
+
 }
 
 

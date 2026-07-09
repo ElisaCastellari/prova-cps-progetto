@@ -3,5 +3,5 @@
 ../Core/Src/game.c:227:6:StopTone	8	static
 ../Core/Src/game.c:231:6:scoreEvaluate	16	static
 ../Core/Src/game.c:283:6:finalScore	8	static
-../Core/Src/game.c:304:6:resetScore	4	static
-../Core/Src/game.c:318:6:gamePlay	16	static
+../Core/Src/game.c:310:6:resetScore	4	static
+../Core/Src/game.c:324:6:gamePlay	16	static

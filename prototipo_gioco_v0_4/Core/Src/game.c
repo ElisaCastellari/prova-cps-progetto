@@ -289,7 +289,13 @@ void finalScore(void){ //per printare i risultati completi a fine game
 	printf("good: %i\r\n", good);
 	printf("bad: %i\r\n", bad);
 	printf("miss: %i\r\n", miss);
+
+	if(hitNotes != 0){ //per evitare divisioni per zero
 	printf("Average response time: %i\r\n", (int)(avgResponseTime / hitNotes)); //average response time, casted as int for semplicity
+	} else {
+		printf("It was not possible to evaluate your response time \r\n");
+	}
+
 	if (bestCombo == SONGLENGHT){
 		printf("Full combo! \r\n");
 		if (perfect == SONGLENGHT){
@@ -337,7 +343,7 @@ void gamePlay(void){
 
 	      buttonPressed = 0; // Resetta per il gioco
 	      printf("\r\nGame start! \r\n");
-
+	      clean_screen();
 	      uint8_t currentNoteIndex = 0; //to keep track of the melody
 
 	      // 2. Ciclo della Canzone
@@ -398,9 +404,9 @@ void gamePlay(void){
 	                    }
 	                    else if (timeoutOccurred == 1) {
 	                        printf("MANCATO! Troppo lento.\r\n");
+	                         //timeoutOccurred = 0; //AGGIUNTO di nuovo (9/7)
 	                         scoreEvaluate(MISSVALUE);
 	                         pressedButtonIndex = targetIndex; //
-	                         //timeoutOccurred = 0; //AGGIUNTO
 	                         //StopTone(); //se qui c'è baco
 	                    }
 	                    else if (buttonPressed == BLUE_BUTTON){ //tasto blu riparte il gioco
@@ -420,6 +426,7 @@ void gamePlay(void){
 	                    	HAL_GPIO_WritePin(array_leds[targetIndex].port, array_leds[targetIndex].pin, GPIO_PIN_RESET);
 	                    	osDelay((melody[currentNoteIndex].waitTime  * DIFFICULTY) - reactionTime);
 	                          }
+	                    //timeoutOccurred = 0; //prova messo qui
 	                    HAL_GPIO_WritePin(array_leds[targetIndex].port, array_leds[targetIndex].pin, GPIO_PIN_RESET);
 	                    StopTone(); //stops the note
 	      }

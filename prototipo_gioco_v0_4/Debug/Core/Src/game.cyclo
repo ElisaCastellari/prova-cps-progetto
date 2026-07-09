@@ -2,6 +2,6 @@
 ../Core/Src/game.c:213:6:PlayTone	2
 ../Core/Src/game.c:227:6:StopTone	1
 ../Core/Src/game.c:231:6:scoreEvaluate	6
-../Core/Src/game.c:283:6:finalScore	3
-../Core/Src/game.c:304:6:resetScore	1
-../Core/Src/game.c:318:6:gamePlay	14
+../Core/Src/game.c:283:6:finalScore	4
+../Core/Src/game.c:310:6:resetScore	1
+../Core/Src/game.c:324:6:gamePlay	14
