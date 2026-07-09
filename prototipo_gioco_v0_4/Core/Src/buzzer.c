@@ -91,3 +91,29 @@ const GameNote_t starWars[] = {// star wars
     {NOTE_D5, 600}  // Taaaa
 };
 
+const Song_t starWars_song = {
+		starWars,
+		sizeof(starWars) / sizeof(starWars[0]) //per scoprire quanto è lungo
+};
+
+const Song_t innoAllaGioia_song = {
+		innoAllaGioia,
+		sizeof(innoAllaGioia) / sizeof(innoAllaGioia[0])
+};
+
+const Song_t happyBirthday_song = {
+		happyBirthday,
+		sizeof(happyBirthday) / sizeof(happyBirthday[0])
+};
+
+const Song_t jingleBells_song = {
+		jingleBells,
+		sizeof(jingleBells) / sizeof(jingleBells[0])
+};
+
+const Song_t superMario_song = {
+		superMario,
+		sizeof(superMario) / sizeof(superMario)
+};
+
+

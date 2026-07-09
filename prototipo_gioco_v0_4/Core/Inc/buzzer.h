@@ -11,4 +11,11 @@ typedef struct {
     uint16_t waitTime;  // Quanti millisecondi aspettare PRIMA di accendere il LED
 } GameNote_t;
 
+//struttura canzone
+typedef struct {
+    const GameNote_t* notes;
+    uint16_t length;
+} Song_t;
+
+
 #endif /* BUZZER_H */

@@ -12,8 +12,8 @@
 #define MISSVALUE 			9999
 //#define SONGLENGHT 			15
 //#define MELODY_LENGTH		15
-#define DIFFICULTY 			1
-#define VOLUME 				2
+#define DIFFICULTY 			1 //più è basso piu è difficile
+#define VOLUME 				2 //piu alto è il numero più è forte
 
 #define NUM_BUTTONS 		3
 #define BLUE_BUTTON 		99

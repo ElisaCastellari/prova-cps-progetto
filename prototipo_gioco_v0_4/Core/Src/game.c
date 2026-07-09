@@ -348,6 +348,7 @@ void gamePlay(void){
 
 	      // 2. Ciclo della Canzone
 	      for(int i = 0; i < sizeof(melody); i++){
+	    	  printf("\n\n\n %i \n\n\n", (int));
 	    	  srand(osKernelSysTick());
 	    	  targetIndex = rand() % NUM_BUTTONS;
 	    	  HAL_GPIO_WritePin(array_leds[targetIndex].port, array_leds[targetIndex].pin, GPIO_PIN_RESET);
