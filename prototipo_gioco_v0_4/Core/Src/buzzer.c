@@ -113,7 +113,7 @@ const Song_t jingleBells_song = {
 
 const Song_t superMario_song = {
 		superMario,
-		sizeof(superMario) / sizeof(superMario)
+		sizeof(superMario) / sizeof(superMario[0])
 };
 
 

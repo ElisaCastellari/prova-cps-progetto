@@ -37,11 +37,11 @@ extern TIM_HandleTypeDef htim2;
 extern uint8_t songSelection;
 
 //my songs
-extern const GameNote_t superMario[];
-extern const GameNote_t starWars[];
-extern const GameNote_t happyBirthday[];
-extern const GameNote_t jingleBells[];
-extern const GameNote_t innoAllaGioia[];
+extern const Song_t superMario_song;
+extern const Song_t starWars_song;
+extern const Song_t happyBirthday_song;
+extern const Song_t jingleBells_song;
+extern const Song_t innoAllaGioia_song;
 
 extern char buffer_schermo[32];
 
@@ -51,12 +51,12 @@ typedef struct {  //struct with port and pin associated
    // uint16_t frequency; //for generating a note with the buzzer
 } HardwareElement_t;
 
-const GameNote_t* libreriaCanzoni[] = {
-    superMario,
-    starWars,
-    happyBirthday,
-    jingleBells,
-    innoAllaGioia
+const Song_t* libreriaCanzoni[] = {
+    &superMario_song,
+    &starWars_song,
+    &happyBirthday_song,
+    &jingleBells_song,
+    &innoAllaGioia_song
 };
 
 
@@ -202,7 +202,7 @@ GameNote_t* melodySelection(){
 	ssd1306_UpdateScreen();
 	osDelay(200); //per evitare debounce  bottoni
 
-	selectedSong = libreriaCanzoni[songSelection];
+	selectedSong = libreriaCanzoni[songSelection]->notes;
 
 	return selectedSong;
 
@@ -347,8 +347,8 @@ void gamePlay(void){
 	      uint8_t currentNoteIndex = 0; //to keep track of the melody
 
 	      // 2. Ciclo della Canzone
-	      for(int i = 0; i < sizeof(melody); i++){
-	    	  printf("\n\n\n %i \n\n\n", (int));
+	      for(int i = 0; i < libreriaCanzoni[songSelection]->length; i++){
+	    	  printf("\n\n\n %i \n\n\n", (int)libreriaCanzoni[songSelection]->length);
 	    	  srand(osKernelSysTick());
 	    	  targetIndex = rand() % NUM_BUTTONS;
 	    	  HAL_GPIO_WritePin(array_leds[targetIndex].port, array_leds[targetIndex].pin, GPIO_PIN_RESET);
