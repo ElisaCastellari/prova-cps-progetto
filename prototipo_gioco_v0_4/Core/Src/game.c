@@ -42,8 +42,9 @@ extern const Song_t starWars_song;
 extern const Song_t happyBirthday_song;
 extern const Song_t jingleBells_song;
 extern const Song_t innoAllaGioia_song;
+extern const Song_t superMarioExtended_song;
 
-extern char buffer_schermo[32];
+extern char buffer_schermo[128];
 
 typedef struct {  //struct with port and pin associated
     GPIO_TypeDef* port;
@@ -56,19 +57,22 @@ const Song_t* libreriaCanzoni[] = {
     &starWars_song,
     &happyBirthday_song,
     &jingleBells_song,
-    &innoAllaGioia_song
+    &innoAllaGioia_song,
+	&superMarioExtended_song
 };
 
 
 #define NUMERO_CANZONI (sizeof(libreriaCanzoni) / sizeof(libreriaCanzoni[0]))
 
+/*
 const char* nomiCanzoni[NUMERO_CANZONI] = { // ho messo questo per dire pure come si chiama la canzone poi
     "Super Mario",
     "Star Wars",
     "Tanti Auguri",
     "Jingle Bells",
-    "Inno alla Gioia"
-};
+    "Inno alla Gioia",
+	"superMarioExtended"
+}; */
 
 extern HardwareElement_t array_leds[NUM_BUTTONS];
 extern HardwareElement_t array_bottoni[NUM_BUTTONS];
@@ -87,6 +91,8 @@ GameNote_t* melodySelection(){
 
 	GameNote_t* selectedSong;
 	songSelection = 0;
+	pressedButtonIndex = -1; //per evitare click involontari prima
+	buttonPressed = 0;
 
 	//screen
 	ssd1306_FillRectangle(ORIGIN_X ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*1) ,126 ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*1 + FONT_Y), Black); // cancello seconda riga
@@ -98,13 +104,14 @@ GameNote_t* melodySelection(){
 	ssd1306_FillRectangle(ORIGIN_X ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*2) ,126 ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*2 + FONT_Y), Black); // cancello terza riga
 
 	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*2)); // terza riga
-	snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", nomiCanzoni[songSelection]);
+	snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", libreriaCanzoni[songSelection]->name);
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 	ssd1306_UpdateScreen();
 
 	osDelay(200);
-	printf("Song %u: %s \r\n", songSelection + 1, nomiCanzoni[songSelection]); //cosi mi dice pure come si chiama la canzone
+	printf("Song %u: %s \r\n", songSelection + 1, libreriaCanzoni[songSelection]->name); //cosi mi dice pure come si chiama la canzone
 	while(1) {
+		//pressedButtonIndex = -1;
 		//printf("Song %u: %s \r\n", songSelection + 1, nomiCanzoni[songSelection]); //cosi mi dice pure come si chiama la canzone
 		if (buttonPressed == 1){ //messo così alrimenti prendeva PURE SE SCHIACCIAVO IL BLU
 
@@ -132,7 +139,7 @@ GameNote_t* melodySelection(){
 			}
 
 			osDelay(200); //per evitare debounce  bottonui
-			printf("Song %u: %s \r\n", songSelection + 1, nomiCanzoni[songSelection]); //cosi mi dice pure come si chiama la canzone
+			printf("Song %u: %s \r\n", songSelection + 1, libreriaCanzoni[songSelection]->name); //cosi mi dice pure come si chiama la canzone
 
 			ssd1306_FillRectangle(ORIGIN_X ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*1) ,126 ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*1 + FONT_Y), Black); // cancello seconda riga
 
@@ -145,19 +152,20 @@ GameNote_t* melodySelection(){
 			ssd1306_FillRectangle(ORIGIN_X ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*2) ,126 ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*2 + FONT_Y), Black); // cancello terza riga
 
 			ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*2) ); // terza riga
-			snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", nomiCanzoni[songSelection]);
+			snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", libreriaCanzoni[songSelection]->name);
 			ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 			ssd1306_UpdateScreen();
 
 			osDelay(200);
 			buttonPressed = 0; //lo ho spostato qui
+			//pressedButtonIndex = -1;
 		}
 		else if (buttonPressed == BLUE_BUTTON){ //in caso in cui premo il blu. torna all'inizio della lista
 			//printf("\n\n\n sono qui \r\n\n\n");
 			songSelection = 0;
 			buttonPressed = 0;
 			osDelay(200);
-			printf("Song %u: %s \r\n", songSelection + 1, nomiCanzoni[songSelection]);
+			printf("Song %u: %s \r\n", songSelection + 1, libreriaCanzoni[songSelection]->name);
 
 			ssd1306_FillRectangle(ORIGIN_X ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*1) ,126 ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*1 + FONT_Y), Black); // cancello seconda riga
 
@@ -170,7 +178,7 @@ GameNote_t* melodySelection(){
 			ssd1306_FillRectangle(ORIGIN_X ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*2) ,126 ,(ORIGIN_Y + (FONT_Y + ROW_SPACE)*2 + FONT_Y), Black); // cancello terza riga
 
 			ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*2) ); // terza riga
-			snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", nomiCanzoni[songSelection]);
+			snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", libreriaCanzoni[songSelection]->name);
 			ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 			ssd1306_UpdateScreen();
 
@@ -184,8 +192,8 @@ GameNote_t* melodySelection(){
 		//buttonPressed = 0;
 	}
 
-	songName = nomiCanzoni[songSelection];
-	printf("Song %u selected: %s will now start: \r\n", songSelection + 1 , nomiCanzoni[songSelection]);
+	songName = libreriaCanzoni[songSelection]->name;
+	printf("Song %u selected: %s will now start: \r\n", songSelection + 1 , libreriaCanzoni[songSelection]->name);
 
 	//screen
 	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*1) ); // seconda riga
@@ -193,7 +201,7 @@ GameNote_t* melodySelection(){
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 
 	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*2) ); // terza riga
-	snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", nomiCanzoni[songSelection]);
+	snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", libreriaCanzoni[songSelection]->name);
 	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*5) ); //sesta riga
 	ssd1306_WriteString("Press BLUE button",Font_7x10, White);
@@ -296,9 +304,9 @@ void finalScore(void){ //per printare i risultati completi a fine game
 		printf("It was not possible to evaluate your response time \r\n");
 	}
 
-	if (bestCombo == sizeof(melody)){
+	if (bestCombo == libreriaCanzoni[songSelection]->length){
 		printf("Full combo! \r\n");
-		if (perfect == sizeof(melody)){
+		if (perfect == libreriaCanzoni[songSelection]->length){
 			printf ("all perfect!\r\n");
 		}
 	}
@@ -372,7 +380,7 @@ void gamePlay(void){
 	                   // PlayTone(melody[currentNoteIndex]); //plays the note
 	                    PlayTone(melody[currentNoteIndex].frequency);
 	                    currentNoteIndex ++; //increment
-	                    if (currentNoteIndex >= sizeof(melody)) {
+	                    if (currentNoteIndex >= libreriaCanzoni[songSelection]->length) {
 	                                  currentNoteIndex = 0;
 	                        }
 	                    printf("PREMI IL BOTTONE %d!\r\n", targetIndex);

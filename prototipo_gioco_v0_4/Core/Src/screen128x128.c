@@ -20,6 +20,8 @@ extern int bestCombo; //to keep track of the best combo
 extern float avgResponseTime; //to make average response time later
 extern int hitNotes;  // to sum all hit notes and make average
 extern const GameNote_t* melody;
+extern const Song_t* libreriaCanzoni[];
+extern uint8_t songSelection;
 
 
 
@@ -56,13 +58,13 @@ void finalScore_screen(void){ //per printare i risultati completi a fine game
 
 
 
-		if (bestCombo == sizeof(melody)){
+		if (bestCombo == libreriaCanzoni[songSelection]->length){
 
 			ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*6) ); // settima riga
 			snprintf(buffer_schermo, sizeof(buffer_schermo), "Full combo!");
 			ssd1306_WriteString(buffer_schermo,Font_7x10, White);
 
-			if (perfect == sizeof(melody)){
+			if (perfect == libreriaCanzoni[songSelection]->length){
 
 				ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*7) ); // ottava riga
 				snprintf (buffer_schermo, sizeof(buffer_schermo), "all perfect!");

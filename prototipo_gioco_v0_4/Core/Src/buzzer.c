@@ -91,29 +91,58 @@ const GameNote_t starWars[] = {// star wars
     {NOTE_D5, 600}  // Taaaa
 };
 
+const GameNote_t superMarioExtended[] = {
+    // Intro
+    {NOTE_E5, 150}, {NOTE_E5, 300}, {NOTE_E5, 300}, {NOTE_C5, 150}, {NOTE_E5, 300},
+    {NOTE_G5, 600}, {NOTE_G4, 600},
+
+    // Parte 1 della melodia principale
+    {NOTE_C5, 450}, {NOTE_G4, 300}, {NOTE_E4, 450}, {NOTE_A4, 300}, {NOTE_B4, 300},
+    {NOTE_AS4, 150}, {NOTE_A4, 300}, {NOTE_G4, 200}, {NOTE_E5, 200}, {NOTE_G5, 200},
+    {NOTE_A5, 300}, {NOTE_F5, 150}, {NOTE_G5, 300}, {NOTE_E5, 300}, {NOTE_C5, 150},
+    {NOTE_D5, 150}, {NOTE_B4, 450},
+
+    // Ripetizione
+    {NOTE_C5, 450}, {NOTE_G4, 300}, {NOTE_E4, 450}, {NOTE_A4, 300}, {NOTE_B4, 300},
+    {NOTE_AS4, 150}, {NOTE_A4, 300}, {NOTE_G4, 200}, {NOTE_E5, 200}, {NOTE_G5, 200},
+    {NOTE_A5, 300}, {NOTE_F5, 150}, {NOTE_G5, 300}, {NOTE_E5, 300}, {NOTE_C5, 150},
+    {NOTE_D5, 150}, {NOTE_B4, 450}
+};
+
 const Song_t starWars_song = {
 		starWars,
-		sizeof(starWars) / sizeof(starWars[0]) //per scoprire quanto è lungo
+		sizeof(starWars) / sizeof(starWars[0]), //per scoprire quanto è lungo
+		"Star Wars"
 };
 
 const Song_t innoAllaGioia_song = {
 		innoAllaGioia,
-		sizeof(innoAllaGioia) / sizeof(innoAllaGioia[0])
+		sizeof(innoAllaGioia) / sizeof(innoAllaGioia[0]),
+		"Inno alla Gioia"
 };
 
 const Song_t happyBirthday_song = {
 		happyBirthday,
-		sizeof(happyBirthday) / sizeof(happyBirthday[0])
+		sizeof(happyBirthday) / sizeof(happyBirthday[0]),
+		"Tanti Auguri"
 };
 
 const Song_t jingleBells_song = {
 		jingleBells,
-		sizeof(jingleBells) / sizeof(jingleBells[0])
+		sizeof(jingleBells) / sizeof(jingleBells[0]),
+		"Jingle Bells"
 };
 
 const Song_t superMario_song = {
 		superMario,
-		sizeof(superMario) / sizeof(superMario[0])
+		sizeof(superMario) / sizeof(superMario[0]),
+		"Super Mario"
+};
+
+const Song_t superMarioExtended_song = {
+		superMarioExtended,
+		sizeof(superMarioExtended)/sizeof(superMarioExtended[0]),
+		"superMarioExtended"
 };
 
 

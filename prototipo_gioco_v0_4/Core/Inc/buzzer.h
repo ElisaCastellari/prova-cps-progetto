@@ -15,6 +15,7 @@ typedef struct {
 typedef struct {
     const GameNote_t* notes;
     uint16_t length;
+    const char* name;
 } Song_t;
 
 
