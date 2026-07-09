@@ -12,7 +12,7 @@ DONE	main.c 479: spostare prima dichiarazione di targetIndex prima di questa rig
 
 DONE	main.c 501: ora looppa all'infinito, vedo come fermarlo
 
-Bisogna premere e lasciare per registrare l'input: ha senso cambiare sta cosa?
+VA BENE COSI	Bisogna premere e lasciare per registrare l'input: ha senso cambiare sta cosa?
 
 DONE	Se c'è il timeout si blocca 
 
@@ -39,11 +39,11 @@ DONE	quando seleziono la canzone subito dopo da wrong button in automatico
 
 DONE	si blocca in song selection se schiaccio il bottone blu
 
-Se quando finisce una canzone non aspetti abbastanza si blocca. Scrive song 1 poi wrong button poi di nuovo song 1 poi puoi andare
+DONE	Se quando finisce una canzone non aspetti abbastanza si blocca. Scrive song 1 poi wrong button poi di nuovo song 1 poi puoi andare
 
-magari una funzione sola per resettare lo schermo
+DONE	magari una funzione sola per resettare lo schermo
 
-capire se c'è un modo per fare andare a capo da sola la scritta nello schermetto
+DONE PIU O MENO	capire se c'è un modo per fare andare a capo da sola la scritta nello schermetto
 
 
 
