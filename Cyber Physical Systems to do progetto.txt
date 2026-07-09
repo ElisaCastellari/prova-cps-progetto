@@ -45,7 +45,11 @@ DONE	magari una funzione sola per resettare lo schermo
 
 DONE PIU O MENO	capire se c'è un modo per fare andare a capo da sola la scritta nello schermetto
 
+Aggiungere accelerometro con modulo .h .c
 
+Aggiungere scheda con modulo .h .c 
+
+Aggiungere modulo della generazione automatica a partire da una traccia
 
 
 
