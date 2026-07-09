@@ -45,7 +45,7 @@ void finalScore_screen(void){ //per printare i risultati completi a fine game
 	ssd1306_WriteString("Average response",Font_7x10, White);
 
 	if(hitNotes != 0){ //per evitare divisioni per zero
-		snprintf(buffer_schermo, sizeof(buffer_schermo), "time: %i", (int)(avgResponseTime / hitNotes)); //average response time, casted as int for semplicity
+		snprintf(buffer_schermo, sizeof(buffer_schermo), "time: %i ms", (int)(avgResponseTime / hitNotes)); //average response time, casted as int for semplicity
 	} else {
 		snprintf(buffer_schermo, sizeof(buffer_schermo),"time : ERROR"); //se tutto errato
 	}

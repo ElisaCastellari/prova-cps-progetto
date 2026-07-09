@@ -190,7 +190,7 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of GameTask */
-  osThreadDef(GameTask, StartGameTask, osPriorityNormal, 0, 128);
+  osThreadDef(GameTask, StartGameTask, osPriorityNormal, 0, 1024); //era di nuovo 128!!! colpa di gubemx
   GameTaskHandle = osThreadCreate(osThread(GameTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
