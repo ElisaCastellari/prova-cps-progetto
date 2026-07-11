@@ -10,6 +10,10 @@
 #include "cmsis_os.h"
 #include "buzzer.h"
 
+
+int reactionTime_screen = 0;
+
+
 int combo = 0; //tiene conto la combo
 volatile int score = 0; //tiene conto dello score
 int perfect = 0;
@@ -283,6 +287,14 @@ void scoreEvaluate(int timer_value){ //per valutare
 	//screen
 	 score_screen_print(songName, noteFeedback);
 
+
+	 ////////////////////time evaluation////////////////////////////////////7
+	 //osDelay(100);
+	 reactionTime_screen = osKernelSysTick() - reactionTime_screen;
+	 printf("\n\n\n\n\n  reaction time screen + printf = %i", reactionTime_screen);
+	 //////////////////////////////////////////////////////////////
+
+
      printf("your combo is %i, score %i.\r\n", combo, score);
 
 }
@@ -398,8 +410,14 @@ void gamePlay(void){
 	                    //StopTone(); //stops the note
 	                    osTimerStop(TimeoutTimerHandle);
 
+
 	                    // 5. Valutazione: ha premuto il tasto, ma è quello GIUSTO?
 	                    if (buttonPressed == 1) {
+
+
+	                    	//per calcolare tempo schemro
+	                    	reactionTime_screen = osKernelSysTick();
+
 	                        if (pressedButtonIndex == targetIndex) {
 	                        	pressedButtonIndex = BLUE_BUTTON; // iniziando hai premuto il tatso blu, dopo ne premi un'altro. Se non va bene rimanere con altri tasti in memoria, al momento torniamo con il blu solo dopo aver capito che il tasto premuto è giusto.
 	                            // HA PREMUTO IL TASTO GIUSTO!

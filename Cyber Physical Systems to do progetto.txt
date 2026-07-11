@@ -74,6 +74,11 @@ PCB con tutto
 
 
 
+IDEE PER PARTE WIRELESS:
+
+ HM-10 preso. ha 4 pin: vdd 5V, gnd, tx, rx. parla con uart. Ha una app per android. 
+
+manda i dati al telefono
 
 
 
