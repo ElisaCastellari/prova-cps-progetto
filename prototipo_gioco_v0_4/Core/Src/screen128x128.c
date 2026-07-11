@@ -149,7 +149,8 @@ void screen_init(void){
 void clean_screen(void){ //così invece che scrivere 3 righe ne scrivo una sola
 	ssd1306_Fill(Black);
 	ssd1306_DrawRectangle(0, 0, 127, 127, White);
-	ssd1306_UpdateScreen();
+	//ssd1306_UpdateScreen();
+	ssd1306_UpdateScreen_DMA();
 }
 
 void score_screen_print(char* songToPlay, char* feedback){
@@ -161,22 +162,29 @@ void score_screen_print(char* songToPlay, char* feedback){
 	//canzone da fare
 	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*0) ); // prima riga
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", songToPlay);
-	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+	//ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+	ssd1306_WriteString_DMA(buffer_schermo,Font_7x10, White);
 
 	//feedback
 	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*3) ); // quarta riga
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "%s", feedback);
-	ssd1306_WriteString(buffer_schermo,Font_11x18, White);
+	//ssd1306_WriteString(buffer_schermo,Font_11x18, White);
+	ssd1306_WriteString_DMA(buffer_schermo,Font_7x10, White);
 	//combo
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "COMBO: %i", combo);
 	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*6) ); // settima riga
-	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+	//ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+	ssd1306_WriteString_DMA(buffer_schermo,Font_7x10, White);
 
 	//score
 	snprintf(buffer_schermo, sizeof(buffer_schermo), "SCORE: %i", score);
 	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*7) ); // ottava riga
-	ssd1306_WriteString(buffer_schermo,Font_7x10, White);
-	ssd1306_UpdateScreen(); //vedo se spostare alla fine di gameTask nel loop
+	//ssd1306_WriteString(buffer_schermo,Font_7x10, White);
+	ssd1306_WriteString_DMA(buffer_schermo,Font_7x10, White);
+
+
+	//ssd1306_UpdateScreen(); //vedo se spostare alla fine di gameTask nel loop
+	ssd1306_UpdateScreen_DMA();
 
 }
 
