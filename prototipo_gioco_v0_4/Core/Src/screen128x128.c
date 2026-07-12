@@ -24,6 +24,107 @@ extern const Song_t* libreriaCanzoni[];
 extern uint8_t songSelection;
 
 
+////////////////////nuove messe da me//////////////////////////////
+
+extern volatile uint8_t trasmissione_in_corso;
+
+// Screenbuffer
+uint8_t SSD1306_Buffer[SSD1306_BUFFER_SIZE];
+
+// Screen object
+SSD1306_t SSD1306;
+
+void ssd1306_WriteData_DMA(uint8_t* buffer, size_t buff_size) {
+	while(trasmissione_in_corso){
+		//osDelay(1);
+	}
+
+	if(trasmissione_in_corso == 0){
+		trasmissione_in_corso = 1;
+		HAL_I2C_Mem_Write_DMA(&SSD1306_I2C_PORT, SSD1306_I2C_ADDR, 0x40, 1, buffer, buff_size);
+	}
+}
+
+void ssd1306_WriteCommand_DMA(uint8_t byte) {
+	while(trasmissione_in_corso){
+		//osDelay(1);
+	}
+
+	if(trasmissione_in_corso == 0){
+		trasmissione_in_corso = 1;
+		HAL_I2C_Mem_Write_DMA(&SSD1306_I2C_PORT, SSD1306_I2C_ADDR, 0x00, 1, &byte, 1);
+	}
+}
+
+void ssd1306_UpdateScreen_DMA(void) {
+    // Write data to each page of RAM. Number of pages
+    // depends on the screen height:
+    //
+    //  * 32px   ==  4 pages
+    //  * 64px   ==  8 pages
+    //  * 128px  ==  16 pages
+    for(uint8_t i = 0; i < SSD1306_HEIGHT/8; i++) {
+        ssd1306_WriteCommand_DMA(0xB0 + i); // Set the current RAM page address.
+        ssd1306_WriteCommand_DMA(0x00 + SSD1306_X_OFFSET_LOWER);
+        ssd1306_WriteCommand_DMA(0x10 + SSD1306_X_OFFSET_UPPER);
+        ssd1306_WriteData_DMA(&SSD1306_Buffer[SSD1306_WIDTH*i],SSD1306_WIDTH);
+    }
+}
+
+
+char ssd1306_WriteChar_DMA(char ch, SSD1306_Font_t Font, SSD1306_COLOR color) {
+    uint32_t i, b, j;
+
+    // Check if character is valid
+    if (ch < 32 || ch > 126)
+        return 0;
+
+    // Char width is not equal to font width for proportional font
+    const uint8_t char_width = Font.char_width ? Font.char_width[ch-32] : Font.width;
+    // Check remaining space on current line
+    if (SSD1306_WIDTH < (SSD1306.CurrentX + char_width) ||
+        SSD1306_HEIGHT < (SSD1306.CurrentY + Font.height))
+    {
+        // Not enough space on current line
+        return 0;
+    }
+
+    // Use the font to write
+    for(i = 0; i < Font.height; i++) {
+        b = Font.data[(ch - 32) * Font.height + i];
+        for(j = 0; j < char_width; j++) {
+            if((b << j) & 0x8000)  {
+                ssd1306_DrawPixel(SSD1306.CurrentX + j, (SSD1306.CurrentY + i), (SSD1306_COLOR) color);
+            } else {
+                ssd1306_DrawPixel(SSD1306.CurrentX + j, (SSD1306.CurrentY + i), (SSD1306_COLOR)!color);
+            }
+        }
+    }
+
+    // The current space is now taken
+    SSD1306.CurrentX += char_width;
+
+    // Return written char for validation
+    return ch;
+}
+
+char ssd1306_WriteString_DMA(char* str, SSD1306_Font_t Font, SSD1306_COLOR color) {
+    while (*str) {
+        if (ssd1306_WriteChar_DMA(*str, Font, color) != *str) {
+            // Char could not be written
+            return *str;
+        }
+        str++;
+    }
+
+    // Everything ok
+    return *str;
+}
+
+////////////////////////////////////////////////////////////////////
+
+
+
 
 void finalScore_screen(void){ //per printare i risultati completi a fine game
 

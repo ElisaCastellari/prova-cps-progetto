@@ -109,6 +109,60 @@ const GameNote_t superMarioExtended[] = {
     {NOTE_D5, 150}, {NOTE_B4, 450}
 };
 
+const GameNote_t vitaSpericolata[] = {
+    // --- "Voglio una vita maleducata" ---
+    {NOTE_G4, 250}, // Vo-
+    {NOTE_G4, 250}, // glio_u-
+    {NOTE_G4, 250}, // na
+    {NOTE_G4, 250}, // vi-
+    {NOTE_G4, 400}, // ta
+    {NOTE_A4, 250}, // ma-
+    {NOTE_A4, 250}, // le-
+    {NOTE_A4, 250}, // du-
+    {NOTE_A4, 250}, // ca-
+    {NOTE_G4, 600}, // ta...
+    {0,       400}, // (pausa per prendere fiato)
+
+    // --- "Di quelle vite fatte, fatte così" ---
+    {NOTE_G4, 250}, // Di
+    {NOTE_G4, 250}, // quel-
+    {NOTE_G4, 250}, // le
+    {NOTE_G4, 250}, // vi-
+    {NOTE_G4, 400}, // te
+    {NOTE_F4, 250}, // fat-
+    {NOTE_F4, 250}, // te
+    {NOTE_E4, 250}, // fat-
+    {NOTE_E4, 250}, // te
+    {NOTE_D4, 250}, // co-
+    {NOTE_C4, 800}, // sì!...
+    {0,       600}, // (pausa)
+
+    // --- "Voglio una vita che se ne frega" ---
+    {NOTE_G4, 250}, // Vo-
+    {NOTE_G4, 250}, // glio_u-
+    {NOTE_G4, 250}, // na
+    {NOTE_G4, 250}, // vi-
+    {NOTE_G4, 400}, // ta
+    {NOTE_A4, 250}, // che
+    {NOTE_A4, 250}, // se
+    {NOTE_A4, 250}, // ne
+    {NOTE_A4, 250}, // fre-
+    {NOTE_G4, 600}, // ga...
+    {0,       400}, // (pausa)
+
+    // --- "Che se ne frega di tutto, sì" ---
+    {NOTE_G4, 250}, // che
+    {NOTE_G4, 250}, // se
+    {NOTE_G4, 250}, // ne
+    {NOTE_G4, 250}, // fre-
+    {NOTE_G4, 400}, // ga
+    {NOTE_F4, 250}, // di
+    {NOTE_F4, 250}, // tut-
+    {NOTE_E4, 250}, // to
+    {NOTE_D4, 250}, // si-
+    {NOTE_C4, 800}, // i!...
+    {0,       800}  // (pausa finale)
+};
 const Song_t starWars_song = {
 		starWars,
 		sizeof(starWars) / sizeof(starWars[0]), //per scoprire quanto è lungo
@@ -143,6 +197,12 @@ const Song_t superMarioExtended_song = {
 		superMarioExtended,
 		sizeof(superMarioExtended)/sizeof(superMarioExtended[0]),
 		"superMarioExtended"
+};
+
+const Song_t vitaSpericolata_song = {
+		vitaSpericolata,
+		sizeof(vitaSpericolata)/sizeof(vitaSpericolata[0]),
+		"Vita Spericolata"
 };
 
 

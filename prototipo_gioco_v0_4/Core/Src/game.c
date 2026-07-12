@@ -47,6 +47,7 @@ extern const Song_t happyBirthday_song;
 extern const Song_t jingleBells_song;
 extern const Song_t innoAllaGioia_song;
 extern const Song_t superMarioExtended_song;
+extern const Song_t vitaSpericolata_song;
 
 extern char buffer_schermo[128];
 
@@ -62,7 +63,8 @@ const Song_t* libreriaCanzoni[] = {
     &happyBirthday_song,
     &jingleBells_song,
     &innoAllaGioia_song,
-	&superMarioExtended_song
+	&superMarioExtended_song,
+	&vitaSpericolata_song
 };
 
 
@@ -246,6 +248,10 @@ void scoreEvaluate(int timer_value){ //per valutare
         printf("miss.\r\n");
         noteFeedback = "MISS";
         miss++;
+    } else if (timer_value == SKIP_VALUE){
+    	//NON FA NULLA
+    	//printf("%\n\n\n index: %i \r\n\n\n\n", timer_value);
+    	noteFeedback = "SKIPPED";
     }
     else{
     	avgResponseTime += timer_value; //to do average at the end
@@ -370,7 +376,11 @@ void gamePlay(void){
 	      for(int i = 0; i < libreriaCanzoni[songSelection]->length; i++){
 	    	  printf("\n\n\n %i \n\n\n", (int)libreriaCanzoni[songSelection]->length);
 	    	  srand(osKernelSysTick());
-	    	  targetIndex = rand() % NUM_BUTTONS;
+
+	    	  if ((i % SKIP_NOTES) == 0){
+	    		  targetIndex = rand() % NUM_BUTTONS;
+	    	  } else targetIndex = SKIP_VALUE;
+	    	  //targetIndex = rand() % NUM_BUTTONS;
 	    	  HAL_GPIO_WritePin(array_leds[targetIndex].port, array_leds[targetIndex].pin, GPIO_PIN_RESET);
 	    	  StopTone(); //stops the note
 	          printf("\r\nWAIT FOR THE LED...\r\n");
@@ -410,9 +420,11 @@ void gamePlay(void){
 	                    //StopTone(); //stops the note
 	                    osTimerStop(TimeoutTimerHandle);
 
-
 	                    // 5. Valutazione: ha premuto il tasto, ma è quello GIUSTO?
-	                    if (buttonPressed == 1) {
+	                    if (targetIndex == SKIP_VALUE){
+	                    	scoreEvaluate(SKIP_VALUE);
+	                    }
+	                    else if (buttonPressed == 1) {
 
 
 	                    	//per calcolare tempo schemro

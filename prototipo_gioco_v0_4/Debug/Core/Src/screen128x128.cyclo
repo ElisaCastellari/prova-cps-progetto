@@ -1,4 +1,9 @@
-../Core/Src/screen128x128.c:28:6:finalScore_screen	4
-../Core/Src/screen128x128.c:127:6:screen_init	1
-../Core/Src/screen128x128.c:149:6:clean_screen	1
-../Core/Src/screen128x128.c:156:6:score_screen_print	1
+../Core/Src/screen128x128.c:37:6:ssd1306_WriteData_DMA	3
+../Core/Src/screen128x128.c:48:6:ssd1306_WriteCommand_DMA	3
+../Core/Src/screen128x128.c:59:6:ssd1306_UpdateScreen_DMA	2
+../Core/Src/screen128x128.c:75:6:ssd1306_WriteChar_DMA	9
+../Core/Src/screen128x128.c:111:6:ssd1306_WriteString_DMA	3
+../Core/Src/screen128x128.c:129:6:finalScore_screen	4
+../Core/Src/screen128x128.c:228:6:screen_init	1
+../Core/Src/screen128x128.c:250:6:clean_screen	1
+../Core/Src/screen128x128.c:257:6:score_screen_print	1

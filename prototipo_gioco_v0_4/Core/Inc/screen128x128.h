@@ -16,6 +16,16 @@
 #include "buzzer.h"
 #include <stdio.h>
 
+//modifica libreria per dma
+void ssd1306_WriteData_DMA(uint8_t* buffer, size_t buff_size);
+void ssd1306_WriteCommand_DMA(uint8_t byte);
+void ssd1306_UpdateScreen_DMA(void);
+char ssd1306_WriteChar_DMA(char ch, SSD1306_Font_t Font, SSD1306_COLOR color);
+char ssd1306_WriteString_DMA(char* str, SSD1306_Font_t Font, SSD1306_COLOR color);
+
+
+
+
 void finalScore_screen(void);
 void screen_init(void);
 void clean_screen(void);
