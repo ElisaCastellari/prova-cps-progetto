@@ -29,10 +29,10 @@ extern uint8_t songSelection;
 extern volatile uint8_t trasmissione_in_corso;
 
 // Screenbuffer
-uint8_t SSD1306_Buffer[SSD1306_BUFFER_SIZE];
+extern uint8_t SSD1306_Buffer[SSD1306_BUFFER_SIZE];
 
 // Screen object
-SSD1306_t SSD1306;
+extern SSD1306_t SSD1306;
 
 void ssd1306_WriteData_DMA(uint8_t* buffer, size_t buff_size) {
 	while(trasmissione_in_corso){
