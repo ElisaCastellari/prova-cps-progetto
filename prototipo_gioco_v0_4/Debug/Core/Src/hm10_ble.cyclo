@@ -1,0 +1,2 @@
+../Core/Src/hm10_ble.c:13:6:bt_transmit_int	2
+../Core/Src/hm10_ble.c:30:5:bt_recieve_int	1

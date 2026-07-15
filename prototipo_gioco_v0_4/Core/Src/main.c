@@ -17,6 +17,7 @@
 #include "game.h"
 #include "constants.h"
 #include "buzzer.h"
+#include "hm10_ble.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -40,11 +41,14 @@ DMA_HandleTypeDef hdma_i2c1_tx;
 
 TIM_HandleTypeDef htim2;
 
+UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 
 osThreadId GameTaskHandle;
 osTimerId TimeoutTimerHandle;
 /* USER CODE BEGIN PV */
+
+uint8_t rx_byte; // variabile per salvare il bt in arrivo
 
 typedef struct {  //struct with port and pin associated
     GPIO_TypeDef* port;
@@ -92,6 +96,7 @@ static void MX_DMA_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_I2C1_Init(void);
+static void MX_USART1_UART_Init(void);
 void StartGameTask(void const * argument);
 void TimeoutCallback(void const * argument);
 
@@ -113,8 +118,16 @@ PUTCHAR_PROTOTYPE
 /* USER CODE BEGIN 0 */
 
 
+//////////////////////////dma///////////////////////////
+volatile uint8_t trasmissione_in_corso = 0;
 
-
+// Questa funzione viene chiamata dall'hardware quando il DMA ha finito
+void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c) {
+    if (hi2c->Instance == I2C1) {
+        trasmissione_in_corso = 0; // Il buffer ora è libero!
+    }
+}
+////////////////////////////////////////////////////////////////
 
 /* USER CODE END 0 */
 
@@ -151,17 +164,18 @@ int main(void)
   MX_TIM2_Init();
   MX_USART2_UART_Init();
   MX_I2C1_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  // Leggiamo un valore a caso dalla memoria per inizializzare il random
+  // HAL_UART_Recieve_IT(&uart1, &rx_byte, 1);
+  /* USER CODE BEGIN 2 */
+  // Stringa da inviare all'HM-10
+  //uint8_t at_command[] = "6";
 
-  //printf("\r\n=== RHYTHM GAME PROTOTYPE ===\r\n");
+  // Invio del comando tramite USART1 (timeout 100ms)
+ // HAL_UART_Transmit(&huart1, at_command, sizeof(at_command)-1, 100);
 
-  //-------------------------------------------------------------------------------
-  //melodySelecion(melody);
-  //melody = melodySelection();
-  //song selection
-  //-------------------------------------------------------------------------------
-  //createDummySong();
+  //bt_transmit_int(3);
+
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -351,6 +365,39 @@ static void MX_TIM2_Init(void)
 }
 
 /**
+  * @brief USART1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART1_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART1_Init 0 */
+
+  /* USER CODE END USART1_Init 0 */
+
+  /* USER CODE BEGIN USART1_Init 1 */
+
+  /* USER CODE END USART1_Init 1 */
+  huart1.Instance = USART1;
+  huart1.Init.BaudRate = 9600;
+  huart1.Init.WordLength = UART_WORDLENGTH_8B;
+  huart1.Init.StopBits = UART_STOPBITS_1;
+  huart1.Init.Parity = UART_PARITY_NONE;
+  huart1.Init.Mode = UART_MODE_TX_RX;
+  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART1_Init 2 */
+
+  /* USER CODE END USART1_Init 2 */
+
+}
+
+/**
   * @brief USART2 Initialization Function
   * @param None
   * @retval None
@@ -481,6 +528,15 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	}
 
 /* Callback del Timer (Fine del tempo) */
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+	if(huart->Instance== USART1)
+	{
+		rx_byte = 1;
+	}
+}
+
+
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_StartGameTask */
@@ -545,16 +601,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE END Callback 1 */
 }
 
-
-//////////////////////////dma///////////////////////////
-volatile uint8_t trasmissione_in_corso = 0;
-
-// Questa funzione viene chiamata dall'hardware quando il DMA ha finito
-void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c) {
-    if (hi2c->Instance == I2C1) {
-        trasmissione_in_corso = 0; // Il buffer ora è libero!
-    }
-}
 /**
   * @brief  This function is executed in case of error occurrence.
   * @retval None

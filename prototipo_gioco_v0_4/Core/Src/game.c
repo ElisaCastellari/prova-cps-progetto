@@ -9,6 +9,7 @@
 #include "game.h"
 #include "cmsis_os.h"
 #include "buzzer.h"
+#include "hm10_ble.h"
 
 
 int reactionTime_screen = 0;
@@ -39,6 +40,7 @@ extern osTimerId TimeoutTimerHandle;
 extern uint32_t reactionTime;
 extern TIM_HandleTypeDef htim2;
 extern uint8_t songSelection;
+extern uint8_t rx_byte;
 
 //my songs
 extern const Song_t superMario_song;
@@ -67,6 +69,8 @@ const Song_t* libreriaCanzoni[] = {
 	&vitaSpericolata_song
 };
 
+extern volatile uint8_t recieved;
+
 
 #define NUMERO_CANZONI (sizeof(libreriaCanzoni) / sizeof(libreriaCanzoni[0]))
 
@@ -86,10 +90,35 @@ extern HardwareElement_t array_bottoni[NUM_BUTTONS];
 
 
 GameNote_t* melodySelection(){
+
+	//////////////////ble recieve prova//////////////////////////
+	int rec = 1;
+
+    osTimerStart(TimeoutTimerHandle, 10000);
+	while(1){
+	if (rx_byte != 0){
+		rec = bt_recieve_int();
+		break;
+	}
+    if(timeoutOccurred == 1){
+    	break;
+    	}
+	}
+	rx_byte = 0;
+	timeoutOccurred = 0;
+	printf("\n\n\n\n\n Difficulty is: %u \n\n\n\n\n", rec);
+	//////////////////////////////////////////////////////////////
+
 	clean_screen();
 
 	printf("---------------------Song Selection Menu:-----------------------\r\n");
 	printf("Press yellow button to go back, green to go on and red to select\r\n");
+
+
+	///////////////////////prova ble//////////////////////////////////
+
+
+	/////////////////////////////////////////////////////////////////
 
 	//screen
 	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*0) ); // prima riga
@@ -243,6 +272,9 @@ void StopTone() {
 }
 
 void scoreEvaluate(int timer_value){ //per valutare
+	//////////////////ble////////////////
+	bt_transmit_int(timer_value);
+	/////////////////////////////////////
     if (timer_value == MISSVALUE){
         combo = 0;
         printf("miss.\r\n");
@@ -254,6 +286,8 @@ void scoreEvaluate(int timer_value){ //per valutare
     	noteFeedback = "SKIPPED";
     }
     else{
+
+
     	avgResponseTime += timer_value; //to do average at the end
     	hitNotes++;
 
@@ -318,6 +352,7 @@ void finalScore(void){ //per printare i risultati completi a fine game
 
 	if(hitNotes != 0){ //per evitare divisioni per zero
 	printf("Average response time: %i\r\n", (int)(avgResponseTime / hitNotes)); //average response time, casted as int for semplicity
+	bt_transmit_int((int)(avgResponseTime / hitNotes));
 	} else {
 		printf("It was not possible to evaluate your response time \r\n");
 	}
