@@ -31,7 +31,7 @@ char* noteFeedback; //per dire quanto bene ho fatto
 
 
 extern uint8_t buttonPressed ; // 0 se non premuto, 1 se premuto
-extern uint8_t timeoutOccurred ; // missed input
+extern volatile uint8_t timeoutOccurred ; // missed input
 extern int8_t pressedButtonIndex ; //to understand which button has been pressed
 extern uint8_t targetIndex;
 extern const GameNote_t* melody;
@@ -41,6 +41,7 @@ extern uint32_t reactionTime;
 extern TIM_HandleTypeDef htim2;
 extern uint8_t songSelection;
 extern uint8_t rx_byte;
+extern UART_HandleTypeDef huart1;
 
 //my songs
 extern const Song_t superMario_song;
@@ -69,7 +70,7 @@ const Song_t* libreriaCanzoni[] = {
 	&vitaSpericolata_song
 };
 
-extern volatile uint8_t recieved;
+extern uint8_t recieved;
 
 
 #define NUMERO_CANZONI (sizeof(libreriaCanzoni) / sizeof(libreriaCanzoni[0]))
@@ -98,12 +99,13 @@ GameNote_t* melodySelection(){
 
 	while(1){
 	if (rx_byte != 0){
-		rec = bt_recieve_int();
+		rec = (int)rx_byte;
 		break;
 	}
     if(timeoutOccurred == 1){
     	break;
     	}
+    osDelay(10);
 	}
 	rx_byte = 0;
 	timeoutOccurred = 0;

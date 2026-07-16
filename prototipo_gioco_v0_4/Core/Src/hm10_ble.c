@@ -28,7 +28,7 @@ void bt_transmit_int(int value){
 }
 
 int bt_recieve_int(void){
-	uint8_t rx_byte;
-	return (int)rx_byte;
-
+	//uint8_t rx_byte;
+	//return (int)rx_byte;
+	return 0;
 }
