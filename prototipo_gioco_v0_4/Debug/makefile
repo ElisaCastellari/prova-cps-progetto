@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (13.3.rel1)
+# Toolchain: GNU Tools for STM32 (14.3.rel1)
 ################################################################################
 
 -include ../makefile.init
@@ -64,8 +64,8 @@ all: main-build
 main-build: prototipo_gioco.elf secondary-outputs
 
 # Tool invocations
-prototipo_gioco.elf prototipo_gioco.map: $(OBJS) $(USER_OBJS) C:\Users\elyca\Desktop\università\primo\ anno\ magistrale\Cyberphysical\ systems\esame\prototipo_gioco_v0_4\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "prototipo_gioco.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\elyca\Desktop\università\primo anno magistrale\Cyberphysical systems\esame\prototipo_gioco_v0_4\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prototipo_gioco.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+prototipo_gioco.elf prototipo_gioco.map: $(OBJS) $(USER_OBJS) C:\UNI\Magistrale\Cyber\ Physical\ Systems\PROGETTONE\prototipo_gioco_v0_4\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "prototipo_gioco.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\UNI\Magistrale\Cyber Physical Systems\PROGETTONE\prototipo_gioco_v0_4\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prototipo_gioco.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
