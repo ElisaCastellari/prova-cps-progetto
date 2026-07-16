@@ -29,8 +29,6 @@ void bt_transmit_int(int value){
 
 int bt_recieve_int(void){
 	uint8_t rx_byte;
-
-	HAL_UART_Receive_IT(&huart1, &rx_byte, 1);
 	return (int)rx_byte;
 
 }
