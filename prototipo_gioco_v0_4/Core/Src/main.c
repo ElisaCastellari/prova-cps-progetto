@@ -176,7 +176,7 @@ int main(void)
  // HAL_UART_Transmit(&huart1, at_command, sizeof(at_command)-1, 100);
 
   //bt_transmit_int(3);
-
+  HAL_UART_Receive_IT(&huart1, &rx_byte, 1);
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -550,7 +550,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 void StartGameTask(void const * argument)
 {
   /* USER CODE BEGIN 5 */
-//<<<<<<< HEAD
  // for(;;)
   //{
 	 // combo = 0;
@@ -563,9 +562,6 @@ void StartGameTask(void const * argument)
     gamePlay();
 
       //printf("Press the BLUE button to start\r\n");
-
-//=======
-//>>>>>>> 277fe622c39a7e296af40d7796e9d3ec46e9e35a
 
   /* USER CODE END 5 */
 }
