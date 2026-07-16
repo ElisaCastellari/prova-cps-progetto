@@ -11,6 +11,6 @@
 ../Core/Src/main.c:508:6:HAL_GPIO_EXTI_Callback	24	static
 ../Core/Src/main.c:532:6:HAL_UART_RxCpltCallback	16	static
 ../Core/Src/main.c:549:6:StartGameTask	16	static
-../Core/Src/main.c:573:6:TimeoutCallback	16	static
-../Core/Src/main.c:590:6:HAL_TIM_PeriodElapsedCallback	16	static
-../Core/Src/main.c:608:6:Error_Handler	8	static,ignoring_inline_asm
+../Core/Src/main.c:569:6:TimeoutCallback	16	static
+../Core/Src/main.c:586:6:HAL_TIM_PeriodElapsedCallback	16	static
+../Core/Src/main.c:604:6:Error_Handler	8	static,ignoring_inline_asm

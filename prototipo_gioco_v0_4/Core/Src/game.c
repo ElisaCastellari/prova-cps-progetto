@@ -93,12 +93,13 @@ GameNote_t* melodySelection(){
 
 	//////////////////ble recieve prova//////////////////////////
 	int rec = 1;
-	HAL_UART_Receive_IT(&huart1, &rx_byte, 1);
+	timeoutOccurred = 0;
+	//HAL_UART_Receive_IT(&huart1, &rx_byte, 1);
     osTimerStart(TimeoutTimerHandle, 10000);
 
 	while(1){
 	if (rx_byte != 0){
-		rec = bt_recieve_int();
+		//rec = bt_recieve_int();
 		break;
 	}
     if(timeoutOccurred == 1){
