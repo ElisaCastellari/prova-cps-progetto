@@ -8,7 +8,7 @@
 #ifndef INC_CONSTANTS_H_
 #define INC_CONSTANTS_H_
 
-#define PERFECT_TRESHOLD 	300
+#define PERFECT_TRESHOLD 	200
 #define MISSVALUE 			9999
 //#define SONGLENGHT 			15
 //#define MELODY_LENGTH		    15

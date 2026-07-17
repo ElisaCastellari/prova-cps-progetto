@@ -5,6 +5,7 @@
  *      Author: elyca
  */
 #include <main.h>
+#include <string.h>
 #include "constants.h"
 #include "game.h"
 #include "cmsis_os.h"
@@ -43,6 +44,8 @@ extern uint8_t songSelection;
 extern uint8_t rx_byte;
 extern UART_HandleTypeDef huart1;
 
+extern volatile uint8_t recieved;
+
 //my songs
 extern const Song_t superMario_song;
 extern const Song_t starWars_song;
@@ -53,6 +56,7 @@ extern const Song_t superMarioExtended_song;
 extern const Song_t vitaSpericolata_song;
 
 extern char buffer_schermo[128];
+
 
 typedef struct {  //struct with port and pin associated
     GPIO_TypeDef* port;
@@ -70,7 +74,7 @@ const Song_t* libreriaCanzoni[] = {
 	&vitaSpericolata_song
 };
 
-extern uint8_t recieved;
+extern volatile uint8_t recievedOK;
 
 
 #define NUMERO_CANZONI (sizeof(libreriaCanzoni) / sizeof(libreriaCanzoni[0]))
@@ -93,18 +97,18 @@ extern HardwareElement_t array_bottoni[NUM_BUTTONS];
 GameNote_t* melodySelection(){
 
 	//////////////////ble recieve prova//////////////////////////
-	int rec = 1;
+	//int rec = 1;
 	timeoutOccurred = 0;
-	//HAL_UART_Receive_IT(&huart1, &rx_byte, 1);
+	HAL_UART_Receive_IT(&huart1, &rx_byte, 1);
     osTimerStart(TimeoutTimerHandle, 10000);
 
 	while(1){
-	if (rx_byte != 0){
-<<<<<<< HEAD
-		rec = (int)rx_byte;
-=======
+	if (recievedOK == 1){
+//<<<<<<< HEAD
+
+//=======
 		//rec = bt_recieve_int();
->>>>>>> f5508766f5717d4afd332a2be6659633f5bf6d32
+//>>>>>>> f5508766f5717d4afd332a2be6659633f5bf6d32
 		break;
 	}
     if(timeoutOccurred == 1){
@@ -112,9 +116,14 @@ GameNote_t* melodySelection(){
     	}
     osDelay(10);
 	}
-	rx_byte = 0;
+
+	recieved = 0; //resetto le mie variabili
 	timeoutOccurred = 0;
-	printf("\n\n\n\n\n Difficulty is: %u \n\n\n\n\n", rec);
+	sprintf(buffer_schermo, "Difficulty is: %u \r\n", rx_byte); //lo scrivo qui sfrutto sempre il buffer dello schermo per non istanziarne un altro
+	//HAL_UART_Transmit(&huart2, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
+	HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
+	osDelay(300); //gli do un po di tempo
+	//rx_byte = '0';
 	//////////////////////////////////////////////////////////////
 
 	clean_screen();

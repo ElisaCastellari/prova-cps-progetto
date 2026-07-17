@@ -1,17 +1,7 @@
-<<<<<<< HEAD
-../Core/Src/game.c:93:13:melodySelection	24	static
-../Core/Src/game.c:259:6:PlayTone	24	static
-../Core/Src/game.c:273:6:StopTone	8	static
-../Core/Src/game.c:277:6:scoreEvaluate	16	static
-../Core/Src/game.c:346:6:finalScore	8	static
-../Core/Src/game.c:374:6:resetScore	4	static
-../Core/Src/game.c:388:6:gamePlay	16	static
-=======
-../Core/Src/game.c:92:13:melodySelection	24	static
-../Core/Src/game.c:258:6:PlayTone	24	static
-../Core/Src/game.c:272:6:StopTone	8	static
-../Core/Src/game.c:276:6:scoreEvaluate	16	static
-../Core/Src/game.c:345:6:finalScore	8	static
-../Core/Src/game.c:373:6:resetScore	4	static
-../Core/Src/game.c:387:6:gamePlay	16	static
->>>>>>> f5508766f5717d4afd332a2be6659633f5bf6d32
+../Core/Src/game.c:97:13:melodySelection	24	static
+../Core/Src/game.c:273:6:PlayTone	24	static
+../Core/Src/game.c:287:6:StopTone	8	static
+../Core/Src/game.c:291:6:scoreEvaluate	16	static
+../Core/Src/game.c:360:6:finalScore	8	static
+../Core/Src/game.c:388:6:resetScore	4	static
+../Core/Src/game.c:402:6:gamePlay	16	static

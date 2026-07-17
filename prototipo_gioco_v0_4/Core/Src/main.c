@@ -73,7 +73,7 @@ volatile uint8_t buttonPressed = 0; // 0 se non premuto, 1 se premuto
 volatile uint8_t timeoutOccurred = 0; // missed input
 volatile int8_t pressedButtonIndex = -1; //to understand which button has been pressed
 volatile uint8_t songSelection = 0;
-uint8_t rx_byte = 0;
+uint8_t rx_byte = '0';
 uint32_t startTime = 0;
 uint8_t targetIndex = 0; //the led that is turned on
 uint32_t reactionTime = 0;
@@ -83,7 +83,7 @@ extern int combo; //tiene conto la combo
 extern int score; //tiene conto dello score
 
 
-
+volatile uint8_t recievedOK = 0; //messo per dire ricevuto
 
 //int timer_value = 0; // valuta tempo di risposta
 
@@ -533,7 +533,13 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 	if(huart->Instance== USART1)
 	{
-		rx_byte = 1;
+		recievedOK = 1; //per dire ricevuto
+		//rx_byte = 1;
+		if (rx_byte == '1') {
+		          HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); // Accende il LED ()vedo se è vivo
+		      }
+		HAL_UART_Receive_IT(&huart1, &rx_byte, 1);
+		//rx_byte = '0';
 	}
 }
 
