@@ -9,6 +9,7 @@
 extern UART_HandleTypeDef huart1;
 
 volatile uint8_t recieved = 0; //1 if i have recieved
+extern uint8_t rx_string;
 
 void bt_transmit_int(int value){
 
@@ -28,7 +29,16 @@ void bt_transmit_int(int value){
 }
 
 int bt_recieve_int(void){
+	// ricevuto è il numero int
+	// rx_string è ciò che si riceve che parte come string quindi ascii e non solo un char penso
+	// effettivamente se usiamo uint8_t rimane un solo byte ma quale di preciso?
+	// noi vogliamo solo il primo byte
+	uint8_t ricevuto =0;
 	//uint8_t rx_byte;
 	//return (int)rx_byte;
-	return 0;
+	if (rx_string >= 48 && rx_string <= 57){
+		ricevuto = ((int) rx_string)-48;
+	}
+	else {ricevuto = 0;}
+	return ricevuto;
 }

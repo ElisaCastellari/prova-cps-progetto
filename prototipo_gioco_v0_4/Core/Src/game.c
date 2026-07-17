@@ -42,6 +42,7 @@ extern uint32_t reactionTime;
 extern TIM_HandleTypeDef htim2;
 extern uint8_t songSelection;
 extern uint8_t rx_byte;
+extern uint8_t rx_string;
 extern UART_HandleTypeDef huart1;
 
 extern volatile uint8_t recieved;

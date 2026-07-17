@@ -74,6 +74,7 @@ volatile uint8_t timeoutOccurred = 0; // missed input
 volatile int8_t pressedButtonIndex = -1; //to understand which button has been pressed
 volatile uint8_t songSelection = 0;
 uint8_t rx_byte = '0';
+uint8_t rx_string = '0';
 uint32_t startTime = 0;
 uint8_t targetIndex = 0; //the led that is turned on
 uint32_t reactionTime = 0;
