@@ -6,10 +6,12 @@
  */
 #include "hm10_ble.h"
 
+
 extern UART_HandleTypeDef huart1;
+extern char buffer_schermo[128];
 
 volatile uint8_t recieved = 0; //1 if i have recieved
-extern uint8_t rx_string;
+extern uint8_t rx_string[50];
 
 void bt_transmit_int(int value){
 
@@ -34,11 +36,22 @@ int bt_recieve_int(void){
 	// effettivamente se usiamo uint8_t rimane un solo byte ma quale di preciso?
 	// noi vogliamo solo il primo byte
 	uint8_t ricevuto =0;
+
+	for (int i = 0; i < 50; i++){
+	sprintf(buffer_schermo, "sono %u, %i \r\n", rx_string[i], i);
+	HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
+	osDelay(10);
+	}
 	//uint8_t rx_byte;
 	//return (int)rx_byte;
-	if (rx_string >= 48 && rx_string <= 57){
-		ricevuto = ((int) rx_string)-48;
+	if ((int)rx_string[0] >= (int)'1' && (int)rx_string[0] <= (int)'9'){
+		ricevuto = ((int) rx_string[0])-48;
+		sprintf(buffer_schermo, "sono entrato \r\n");
+		HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
 	}
-	else {ricevuto = 0;}
+	else {ricevuto = 0;
+	sprintf(buffer_schermo, "sono fuori \r\n");
+	HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
+	}
 	return ricevuto;
 }

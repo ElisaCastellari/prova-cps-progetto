@@ -12,6 +12,7 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "constants.h"
+#include <string.h>
 
 void bt_transmit_int(int value);
 int bt_recieve_int(void);

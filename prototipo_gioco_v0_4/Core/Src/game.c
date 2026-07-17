@@ -31,6 +31,8 @@ char* songName; //per passare il nome del song
 char* noteFeedback; //per dire quanto bene ho fatto
 
 
+int diff = 0; //messo per difficulty
+
 extern uint8_t buttonPressed ; // 0 se non premuto, 1 se premuto
 extern volatile uint8_t timeoutOccurred ; // missed input
 extern int8_t pressedButtonIndex ; //to understand which button has been pressed
@@ -42,10 +44,10 @@ extern uint32_t reactionTime;
 extern TIM_HandleTypeDef htim2;
 extern uint8_t songSelection;
 extern uint8_t rx_byte;
-extern uint8_t rx_string;
+extern uint8_t rx_string[50];
 extern UART_HandleTypeDef huart1;
 
-extern volatile uint8_t recieved;
+//extern volatile uint8_t recieved;
 
 //my songs
 extern const Song_t superMario_song;
@@ -96,37 +98,47 @@ extern HardwareElement_t array_bottoni[NUM_BUTTONS];
 
 
 GameNote_t* melodySelection(){
+	HAL_UART_Receive_IT(&huart1, rx_string, 1);
+while(1){ //ciclo debug
 
 	//////////////////ble recieve prova//////////////////////////
 	//int rec = 1;
 	timeoutOccurred = 0;
-	HAL_UART_Receive_IT(&huart1, &rx_byte, 1);
+	//HAL_UART_Receive_IT(&huart1, &rx_byte, 1);
+
     osTimerStart(TimeoutTimerHandle, 10000);
 
 	while(1){
 	if (recievedOK == 1){
 //<<<<<<< HEAD
-
+		diff = bt_recieve_int();
+		sprintf(buffer_schermo, "Difficulty is: %i \r\n", diff); //lo scrivo qui sfrutto sempre il buffer dello schermo per non istanziarne un altro
+			HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
+			sprintf(buffer_schermo, "Difficulty raw is: %u \r\n", rx_string[0]);
+			HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
 //=======
 		//rec = bt_recieve_int();
 //>>>>>>> f5508766f5717d4afd332a2be6659633f5bf6d32
 		break;
+
 	}
     if(timeoutOccurred == 1){
+    	diff = 1;
     	break;
     	}
     osDelay(10);
 	}
 
-	recieved = 0; //resetto le mie variabili
+	recievedOK = 0; //resetto le mie variabili
 	timeoutOccurred = 0;
-	sprintf(buffer_schermo, "Difficulty is: %u \r\n", rx_byte); //lo scrivo qui sfrutto sempre il buffer dello schermo per non istanziarne un altro
-	//HAL_UART_Transmit(&huart2, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
-	HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
+	//sprintf(buffer_schermo, "Difficulty is: %i \r\n", diff); //lo scrivo qui sfrutto sempre il buffer dello schermo per non istanziarne un altro
+	//HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
+//	sprintf(buffer_schermo, "Difficulty raw is: %u \r\n", rx_string[0]);
+	//HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
 	osDelay(300); //gli do un po di tempo
 	//rx_byte = '0';
 	//////////////////////////////////////////////////////////////
-
+} // nuova graffa debug
 	clean_screen();
 
 	printf("---------------------Song Selection Menu:-----------------------\r\n");
