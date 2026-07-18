@@ -98,7 +98,7 @@ extern HardwareElement_t array_bottoni[NUM_BUTTONS];
 
 
 GameNote_t* melodySelection(){
-	HAL_UART_Receive_IT(&huart1, rx_string, 1);
+	//HAL_UART_Receive_IT(&huart1, rx_string, 1);
 while(1){ //ciclo debug
 
 	//////////////////ble recieve prova//////////////////////////
@@ -111,11 +111,16 @@ while(1){ //ciclo debug
 	while(1){
 	if (recievedOK == 1){
 //<<<<<<< HEAD
-		diff = bt_recieve_int();
+		diff = bt_recieve_forzaBrutta();
+
+		osDelay(10);
+
 		sprintf(buffer_schermo, "Difficulty is: %i \r\n", diff); //lo scrivo qui sfrutto sempre il buffer dello schermo per non istanziarne un altro
 			HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
 			sprintf(buffer_schermo, "Difficulty raw is: %u \r\n", rx_string[0]);
 			HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
+
+
 //=======
 		//rec = bt_recieve_int();
 //>>>>>>> f5508766f5717d4afd332a2be6659633f5bf6d32
@@ -131,11 +136,13 @@ while(1){ //ciclo debug
 
 	recievedOK = 0; //resetto le mie variabili
 	timeoutOccurred = 0;
+
 	//sprintf(buffer_schermo, "Difficulty is: %i \r\n", diff); //lo scrivo qui sfrutto sempre il buffer dello schermo per non istanziarne un altro
 	//HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
 //	sprintf(buffer_schermo, "Difficulty raw is: %u \r\n", rx_string[0]);
 	//HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
 	osDelay(300); //gli do un po di tempo
+	HAL_UART_Receive_IT(&huart1, rx_string, 1);
 	//rx_byte = '0';
 	//////////////////////////////////////////////////////////////
 } // nuova graffa debug

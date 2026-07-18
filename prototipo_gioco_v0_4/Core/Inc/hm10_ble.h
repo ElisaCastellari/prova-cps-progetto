@@ -16,5 +16,6 @@
 
 void bt_transmit_int(int value);
 int bt_recieve_int(void);
+int bt_recieve_forzaBrutta(void);
 
 #endif /* INC_HM10_BLE_H_ */

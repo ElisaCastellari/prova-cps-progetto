@@ -55,3 +55,21 @@ int bt_recieve_int(void){
 	}
 	return ricevuto;
 }
+
+int bt_recieve_forzaBrutta(void){
+	if (rx_string[0] == '1'){
+		return 1;
+	} else if(rx_string[0] == '2'){
+		return 2;
+	}else if(rx_string[0] == '3'){
+		return 3;
+	} else if(rx_string[0] == '4'){
+		return 4;
+	}else if(rx_string[0] == '5'){
+		return 5;
+	} else{
+		sprintf(buffer_schermo, "Difficulty not recognized \r\n");
+		HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
+		return 3;
+	}
+}

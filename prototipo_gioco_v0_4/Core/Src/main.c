@@ -176,7 +176,7 @@ int main(void)
  // HAL_UART_Transmit(&huart1, at_command, sizeof(at_command)-1, 100);
 
   //bt_transmit_int(3);
-  HAL_UART_Receive_IT(&huart1, &rx_byte, 1);
+  HAL_UART_Receive_IT(&huart1, rx_string, 1);
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -539,7 +539,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 		          HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); // Accende il LED ()vedo se è vivo
 		      }
 		//HAL_UART_Receive_IT(&huart1, &rx_byte, 1);
-		HAL_UART_Receive_IT(&huart1, rx_string, 1);
+		//HAL_UART_Receive_IT(&huart1, rx_string, 1);
 		//rx_byte = '0';
 	}
 }

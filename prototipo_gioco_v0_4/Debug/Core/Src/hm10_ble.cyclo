@@ -1,2 +1,3 @@
 ../Core/Src/hm10_ble.c:16:6:bt_transmit_int	2
 ../Core/Src/hm10_ble.c:33:5:bt_recieve_int	4
+../Core/Src/hm10_ble.c:59:5:bt_recieve_forzaBrutta	6
