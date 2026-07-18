@@ -14,6 +14,7 @@
 
 
 int reactionTime_screen = 0;
+float DIFFICULTY = 2;
 
 
 int combo = 0; //tiene conto la combo
@@ -99,7 +100,7 @@ extern HardwareElement_t array_bottoni[NUM_BUTTONS];
 
 GameNote_t* melodySelection(){
 	//HAL_UART_Receive_IT(&huart1, rx_string, 1);
-while(1){ //ciclo debug
+//while(1){ //ciclo debug
 
 	//////////////////ble recieve prova//////////////////////////
 	//int rec = 1;
@@ -128,7 +129,7 @@ while(1){ //ciclo debug
 
 	}
     if(timeoutOccurred == 1){
-    	diff = 1;
+    	diff = 3;
     	break;
     	}
     osDelay(10);
@@ -145,8 +146,19 @@ while(1){ //ciclo debug
 	HAL_UART_Receive_IT(&huart1, rx_string, 1);
 	//rx_byte = '0';
 	//////////////////////////////////////////////////////////////
-} // nuova graffa debug
+//} // nuova graffa debug
 	clean_screen();
+
+	if (diff == 1)
+	{DIFFICULTY = 1.6;} else
+	if (diff == 2)
+	{DIFFICULTY = 1.3;} else
+	if (diff == 3)
+	{DIFFICULTY = 1;} else
+	if (diff == 4)
+	{DIFFICULTY = 0.8;} else
+	if (diff == 5)
+	{DIFFICULTY = 0.6;}
 
 	printf("---------------------Song Selection Menu:-----------------------\r\n");
 	printf("Press yellow button to go back, green to go on and red to select\r\n");

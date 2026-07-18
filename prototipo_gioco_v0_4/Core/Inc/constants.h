@@ -12,7 +12,7 @@
 #define MISSVALUE 			9999
 //#define SONGLENGHT 			15
 //#define MELODY_LENGTH		    15
-#define DIFFICULTY 			1 //più è basso piu è difficile
+//#define DIFFICULTY 			1 //più è basso piu è difficile
 #define SKIP_NOTES			1 //ogni quanto da la nota
 #define SKIP_VALUE			9 //se la nota è skippata si vede questo e skippa il dare un punteggio pure
 #define VOLUME 				3 //piu alto è il numero più è forte

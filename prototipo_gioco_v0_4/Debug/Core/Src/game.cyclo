@@ -1,7 +1,7 @@
-../Core/Src/game.c:100:13:melodySelection	3
-../Core/Src/game.c:293:6:PlayTone	2
-../Core/Src/game.c:307:6:StopTone	1
-../Core/Src/game.c:311:6:scoreEvaluate	7
-../Core/Src/game.c:380:6:finalScore	4
-../Core/Src/game.c:408:6:resetScore	1
-../Core/Src/game.c:422:6:gamePlay	15
+../Core/Src/game.c:101:13:melodySelection	16
+../Core/Src/game.c:305:6:PlayTone	2
+../Core/Src/game.c:319:6:StopTone	1
+../Core/Src/game.c:323:6:scoreEvaluate	7
+../Core/Src/game.c:392:6:finalScore	4
+../Core/Src/game.c:420:6:resetScore	1
+../Core/Src/game.c:434:6:gamePlay	15
