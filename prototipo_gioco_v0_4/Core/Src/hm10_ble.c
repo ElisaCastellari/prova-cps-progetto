@@ -11,7 +11,7 @@ extern UART_HandleTypeDef huart1;
 extern char buffer_schermo[128];
 
 volatile uint8_t recieved = 0; //1 if i have recieved
-extern uint8_t rx_string[50];
+extern uint8_t rx_string;
 
 void bt_transmit_int(int value){
 
@@ -37,15 +37,15 @@ int bt_recieve_int(void){
 	// noi vogliamo solo il primo byte
 	uint8_t ricevuto =0;
 
-	for (int i = 0; i < 50; i++){
-	sprintf(buffer_schermo, "sono %u, %i \r\n", rx_string[i], i);
-	HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
-	osDelay(10);
-	}
+	//for (int i = 0; i < 50; i++){
+	//sprintf(buffer_schermo, "sono %u, %i \r\n", rx_string, i);
+	//HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
+	//osDelay(10);
+	//}
 	//uint8_t rx_byte;
 	//return (int)rx_byte;
-	if ((int)rx_string[0] >= (int)'1' && (int)rx_string[0] <= (int)'9'){
-		ricevuto = ((int) rx_string[0])-48;
+	if ((int)rx_string >= (int)'1' && (int)rx_string <= (int)'9'){
+		ricevuto = ((int) rx_string)-48;
 		sprintf(buffer_schermo, "sono entrato \r\n");
 		HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
 	}
@@ -57,15 +57,15 @@ int bt_recieve_int(void){
 }
 
 int bt_recieve_forzaBrutta(void){
-	if (rx_string[0] == '1'){
+	if (rx_string == '1'){
 		return 1;
-	} else if(rx_string[0] == '2'){
+	} else if(rx_string == '2'){
 		return 2;
-	}else if(rx_string[0] == '3'){
+	}else if(rx_string == '3'){
 		return 3;
-	} else if(rx_string[0] == '4'){
+	} else if(rx_string == '4'){
 		return 4;
-	}else if(rx_string[0] == '5'){
+	}else if(rx_string == '5'){
 		return 5;
 	} else{
 		sprintf(buffer_schermo, "Difficulty not recognized \r\n");

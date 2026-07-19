@@ -6,6 +6,7 @@
  */
 #include <main.h>
 #include <string.h>
+#include <math.h>
 #include "constants.h"
 #include "game.h"
 #include "cmsis_os.h"
@@ -15,6 +16,7 @@
 
 int reactionTime_screen = 0;
 float DIFFICULTY = 2;
+int PERFECT_TRESHOLD = 0;
 
 
 int combo = 0; //tiene conto la combo
@@ -44,8 +46,8 @@ extern osTimerId TimeoutTimerHandle;
 extern uint32_t reactionTime;
 extern TIM_HandleTypeDef htim2;
 extern uint8_t songSelection;
-extern uint8_t rx_byte;
-extern uint8_t rx_string[50];
+//extern uint8_t rx_byte;
+extern uint8_t rx_string;
 extern UART_HandleTypeDef huart1;
 
 //extern volatile uint8_t recieved;
@@ -101,13 +103,39 @@ extern HardwareElement_t array_bottoni[NUM_BUTTONS];
 GameNote_t* melodySelection(){
 	//HAL_UART_Receive_IT(&huart1, rx_string, 1);
 //while(1){ //ciclo debug
-
+	clean_screen();
 	//////////////////ble recieve prova//////////////////////////
+	sprintf(buffer_schermo, "Difficulty selection [1-5]:\r\n"); //lo scrivo qui sfrutto sempre il buffer dello schermo per non istanziarne un altro
+	HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
 	//int rec = 1;
 	timeoutOccurred = 0;
+	
+	//scrivo info nello schermetto
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*0) ); // prima riga
+	ssd1306_WriteString("DIFFICULTY SELECTION:",Font_7x10, White);
+
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*1) ); // prima riga
+	ssd1306_WriteString("Use smartphone",Font_7x10, White);
+
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*2) ); // prima riga
+	ssd1306_WriteString("1: EASY",Font_7x10, White);
+
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*3) ); // prima riga
+	ssd1306_WriteString("2: MEDIUM",Font_7x10, White);
+
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*4) ); // prima riga
+	ssd1306_WriteString("3: DIFFICULT",Font_7x10, White);
+
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*5) ); // prima riga
+	ssd1306_WriteString("4 : EXPERT",Font_7x10, White);
+
+	ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (FONT_Y + ROW_SPACE)*6) ); // prima riga
+	ssd1306_WriteString("5: MASTER",Font_7x10, White);
+
+	ssd1306_UpdateScreen();
 	//HAL_UART_Receive_IT(&huart1, &rx_byte, 1);
 
-    osTimerStart(TimeoutTimerHandle, 10000);
+    osTimerStart(TimeoutTimerHandle, 10000); //se dopo 10sec non risponde basta
 
 	while(1){
 	if (recievedOK == 1){
@@ -118,8 +146,8 @@ GameNote_t* melodySelection(){
 
 		sprintf(buffer_schermo, "Difficulty is: %i \r\n", diff); //lo scrivo qui sfrutto sempre il buffer dello schermo per non istanziarne un altro
 			HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
-			sprintf(buffer_schermo, "Difficulty raw is: %u \r\n", rx_string[0]);
-			HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
+			//sprintf(buffer_schermo, "Difficulty raw is: %u \r\n", rx_string[0]);
+			//HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
 
 
 //=======
@@ -130,6 +158,8 @@ GameNote_t* melodySelection(){
 	}
     if(timeoutOccurred == 1){
     	diff = 3;
+		sprintf(buffer_schermo, "TIMEOUT \r\n"); //lo scrivo qui sfrutto sempre il buffer dello schermo per non istanziarne un altro
+		HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
     	break;
     	}
     osDelay(10);
@@ -143,7 +173,7 @@ GameNote_t* melodySelection(){
 //	sprintf(buffer_schermo, "Difficulty raw is: %u \r\n", rx_string[0]);
 	//HAL_UART_Transmit(&huart1, (uint8_t*)buffer_schermo, strlen(buffer_schermo), 100);
 	osDelay(300); //gli do un po di tempo
-	HAL_UART_Receive_IT(&huart1, rx_string, 1);
+	HAL_UART_Receive_IT(&huart1, &rx_string, 1);
 	//rx_byte = '0';
 	//////////////////////////////////////////////////////////////
 //} // nuova graffa debug
@@ -340,21 +370,21 @@ void scoreEvaluate(int timer_value){ //per valutare
     	avgResponseTime += timer_value; //to do average at the end
     	hitNotes++;
 
-     if(timer_value < PERFECT_TRESHOLD * DIFFICULTY){
+     if(timer_value < fmax(PERFECT_TRESHOLD, PERFECT_TRESHOLD_MIN )){
      	printf("PERFECT\r\n");
      	noteFeedback = "PERFECT";
      	score += 500;
      	combo++;
      	perfect++;
      }
-     else if(timer_value < PERFECT_TRESHOLD*2 * DIFFICULTY){
+     else if(timer_value < fmax(PERFECT_TRESHOLD*2, PERFECT_TRESHOLD_MIN )){
      	printf("GREAT\r\n");
      	noteFeedback = "GREAT";
      	score += 300;
      	combo++;
      	great++;
      }
-     else if(timer_value < PERFECT_TRESHOLD*3 * DIFFICULTY){
+     else if(timer_value < fmax(PERFECT_TRESHOLD*3, PERFECT_TRESHOLD_MIN )){
      	printf("GOOD\r\n");
      	noteFeedback = "GOOD";
      	score += 150;
@@ -453,12 +483,22 @@ void gamePlay(void){
 
 	      buttonPressed = 0; // Resetta per il gioco
 	      printf("\r\nGame start! \r\n");
+
+
 	      clean_screen();
 	      uint8_t currentNoteIndex = 0; //to keep track of the melody
 
+	      ///////////per tempo//////////
+	      int timeSong= osKernelSysTick();
 	      // 2. Ciclo della Canzone
 	      for(int i = 0; i < libreriaCanzoni[songSelection]->length; i++){
-	    	  printf("\n\n\n %i \n\n\n", (int)libreriaCanzoni[songSelection]->length);
+	    	  //printf("\n\n\n %i \n\n\n", (int)libreriaCanzoni[songSelection]->length);
+	    	  if (melody[currentNoteIndex].waitTime <= 1200){
+	    		  PERFECT_TRESHOLD = (int)(melody[currentNoteIndex].waitTime * DIFFICULTY /3);
+	    	  } else {
+	    		  PERFECT_TRESHOLD = PERFECT_TRESHOLD_MAX;
+	    	  }
+
 	    	  srand(osKernelSysTick());
 
 	    	  if ((i % SKIP_NOTES) == 0){
@@ -491,8 +531,16 @@ void gamePlay(void){
 	                        }
 	                    printf("PREMI IL BOTTONE %d!\r\n", targetIndex);
 
+
+	                    osDelay(50); //prova mia, offset per non fare troppo difficile
+
+
 	                    startTime = osKernelSysTick();
+	                    //il -1 c'è perche abbiami ncrementato prima currentNOTEINDEX
 	                    osTimerStart(TimeoutTimerHandle, melody[currentNoteIndex-1].waitTime * DIFFICULTY);
+	                    //osTimerStart(TimeoutTimerHandle, PERFECT_TRESHOLD*4); //il massimo per il bad
+	                    //osTimerStart(TimeoutTimerHandle, 1000);
+
 
 	                    // 3. Aspetta il click...
 	                    while(buttonPressed == 0 && timeoutOccurred == 0) {
@@ -552,7 +600,20 @@ void gamePlay(void){
 	                    //timeoutOccurred = 0; //prova messo qui
 	                    HAL_GPIO_WritePin(array_leds[targetIndex].port, array_leds[targetIndex].pin, GPIO_PIN_RESET);
 	                    StopTone(); //stops the note
+
+
+	                    }
+
+	      timeSong = osKernelSysTick() - timeSong;
+
+	      ///////////////to estimate time///////////////////////////////////////
+	      int sumTime = 0;
+	      for (int j = 0; j < libreriaCanzoni[songSelection]->length; j++){
+	      	sumTime = sumTime + melody[j].waitTime * DIFFICULTY;
+	      	printf("\n %i  %i \r\n", melody[j].waitTime, j);
 	      }
+	      printf("\n\n actual play time: %i   \r\n  expected play time: %i \r\n\n", timeSong, sumTime);
+
 	                          printf("\r\n------GAME OVER, THANKS FOR PLAYING!------\r\n");
 	                          //HAL_GPIO_WritePin(array_leds[targetIndex].port, array_leds[targetIndex].pin, GPIO_PIN_RESET);
 	                          //StopTone(); //stops the note

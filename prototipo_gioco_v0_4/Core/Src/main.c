@@ -43,6 +43,7 @@ TIM_HandleTypeDef htim2;
 
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
+UART_HandleTypeDef huart6;
 
 osThreadId GameTaskHandle;
 osTimerId TimeoutTimerHandle;
@@ -73,8 +74,8 @@ volatile uint8_t buttonPressed = 0; // 0 se non premuto, 1 se premuto
 volatile uint8_t timeoutOccurred = 0; // missed input
 volatile int8_t pressedButtonIndex = -1; //to understand which button has been pressed
 volatile uint8_t songSelection = 0;
-uint8_t rx_byte = '0';
-uint8_t rx_string[50];
+//uint8_t rx_byte = '0';
+uint8_t rx_string = '0';
 uint32_t startTime = 0;
 uint8_t targetIndex = 0; //the led that is turned on
 uint32_t reactionTime = 0;
@@ -98,6 +99,7 @@ static void MX_TIM2_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_USART1_UART_Init(void);
+static void MX_USART6_UART_Init(void);
 void StartGameTask(void const * argument);
 void TimeoutCallback(void const * argument);
 
@@ -166,6 +168,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_I2C1_Init();
   MX_USART1_UART_Init();
+  MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
   // HAL_UART_Recieve_IT(&uart1, &rx_byte, 1);
   /* USER CODE BEGIN 2 */
@@ -176,7 +179,7 @@ int main(void)
  // HAL_UART_Transmit(&huart1, at_command, sizeof(at_command)-1, 100);
 
   //bt_transmit_int(3);
-  HAL_UART_Receive_IT(&huart1, rx_string, 1);
+  HAL_UART_Receive_IT(&huart1, &rx_string, 1);
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -432,6 +435,39 @@ static void MX_USART2_UART_Init(void)
 }
 
 /**
+  * @brief USART6 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART6_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART6_Init 0 */
+
+  /* USER CODE END USART6_Init 0 */
+
+  /* USER CODE BEGIN USART6_Init 1 */
+
+  /* USER CODE END USART6_Init 1 */
+  huart6.Instance = USART6;
+  huart6.Init.BaudRate = 9600;
+  huart6.Init.WordLength = UART_WORDLENGTH_8B;
+  huart6.Init.StopBits = UART_STOPBITS_1;
+  huart6.Init.Parity = UART_PARITY_NONE;
+  huart6.Init.Mode = UART_MODE_TX_RX;
+  huart6.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart6.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart6) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART6_Init 2 */
+
+  /* USER CODE END USART6_Init 2 */
+
+}
+
+/**
   * Enable DMA controller clock
   */
 static void MX_DMA_Init(void)
@@ -535,9 +571,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 	{
 		recievedOK = 1; //per dire ricevuto
 		//rx_byte = 1;
-		if (rx_string[0] == '7') {
-		          HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); // Accende il LED ()vedo se è vivo
-		      }
+		//if (rx_string == '7') {
+		//          HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); // Accende il LED ()vedo se è vivo
+		 //     }
 		//HAL_UART_Receive_IT(&huart1, &rx_byte, 1);
 		//HAL_UART_Receive_IT(&huart1, rx_string, 1);
 		//rx_byte = '0';

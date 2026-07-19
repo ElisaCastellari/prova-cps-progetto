@@ -8,8 +8,9 @@
 #ifndef INC_CONSTANTS_H_
 #define INC_CONSTANTS_H_
 
-#define PERFECT_TRESHOLD 	200
-#define MISSVALUE 			9999
+#define PERFECT_TRESHOLD_MAX 	400
+#define PERFECT_TRESHOLD_MIN	200
+#define MISSVALUE 				9999
 //#define SONGLENGHT 			15
 //#define MELODY_LENGTH		    15
 //#define DIFFICULTY 			1 //più è basso piu è difficile
