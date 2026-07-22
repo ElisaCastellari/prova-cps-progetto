@@ -331,7 +331,7 @@ GameNote_t* melodySelection(){
 }
 
 
-// Funzione magica per generare una nota
+// Funzione per generare una nota
 void PlayTone(uint16_t freq) {
     if (freq == 0) return; // Se è 0, non suono
 
@@ -340,7 +340,7 @@ void PlayTone(uint16_t freq) {
     uint32_t array_value = 1000000 / freq;
 
     __HAL_TIM_SET_AUTORELOAD(&htim2, array_value);     // Imposta l'altezza della nota, &htim2 è il nome del timer
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, array_value / VOLUME); // Imposta il volume (Duty cycle 50%)
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, array_value / VOLUME); // Imposta il volume (Duty cycle)
 
     HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);        // Accendi il suono!
 }
@@ -482,8 +482,16 @@ void gamePlay(void){
 	      }
 
 	      buttonPressed = 0; // Resetta per il gioco
+	      clean_screen();
 	      printf("\r\nGame start! \r\n");
 
+	      //messo pra per dire nello schermetto che sta per iniziare enon fare iniziare subito (facile miss in quel caso)
+	      ssd1306_SetCursor(ORIGIN_X, (ORIGIN_Y + (TITLE_Y + TITLE_SPACE)*0) ); // prima riga
+	      ssd1306_WriteString("GAME WILL",Font_11x18, White);
+	      ssd1306_SetCursor(14, (ORIGIN_Y + (TITLE_Y + TITLE_SPACE)*1) ); // seconda riga
+	      ssd1306_WriteString("START SOON",Font_11x18, White);
+	      ssd1306_UpdateScreen();
+	      osDelay(1500);
 
 	      clean_screen();
 	      uint8_t currentNoteIndex = 0; //to keep track of the melody
@@ -532,7 +540,7 @@ void gamePlay(void){
 	                    printf("PREMI IL BOTTONE %d!\r\n", targetIndex);
 
 
-	                    osDelay(50); //prova mia, offset per non fare troppo difficile
+	                    //osDelay(75); //prova mia, offset per non fare troppo difficile
 
 
 	                    startTime = osKernelSysTick();
@@ -544,7 +552,7 @@ void gamePlay(void){
 
 	                    // 3. Aspetta il click...
 	                    while(buttonPressed == 0 && timeoutOccurred == 0) {
-	                        osDelay(1);
+	                        osDelay(1); //altrimenti a volte si impalla
 	                    }
 
 	                    // 4. Spegni il led che era acceso

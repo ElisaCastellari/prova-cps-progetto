@@ -4,4 +4,4 @@
 ../Core/Src/game.c:353:6:scoreEvaluate	24	static
 ../Core/Src/game.c:422:6:finalScore	8	static
 ../Core/Src/game.c:450:6:resetScore	4	static
-../Core/Src/game.c:464:6:gamePlay	32	static
+../Core/Src/game.c:464:6:gamePlay	40	static
