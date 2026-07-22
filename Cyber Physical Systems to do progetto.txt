@@ -45,11 +45,9 @@ DONE	magari una funzione sola per resettare lo schermo
 
 DONE PIU O MENO	capire se c'è un modo per fare andare a capo da sola la scritta nello schermetto
 
-Aggiungere accelerometro con modulo .h .c
+reaction time minimo 250ms
 
-Aggiungere scheda con modulo .h .c 
 
-Aggiungere modulo della generazione automatica a partire da una traccia
 
 
 
@@ -78,11 +76,111 @@ PCB con tutto
 
 
 
+
+
 IDEE PER PARTE WIRELESS:
 
  HM-10 preso. ha 4 pin: vdd 5V, gnd, tx, rx. parla con uart. Ha una app per android. 
 
 manda i dati al telefono
+
+
+
+
+
+LINK:
+
+extension://efaidnbmnnnibpcajpcglclefindmkaj/https://d1wqtxts1xzle7.cloudfront.net/64062035/20_17jul_7jul_22apr_20669_p3_ICFICE2018_%28edit_leli%29-libre.pdf?1596171582=&response-content-disposition=inline%3B+filename%3DAnalysis_and_evaluation_of_mobile_rhythm.pdf&Expires=1783782323&Signature=IC7vi6Bbng1-pPj2x9y1D49F~RQJy51gowkMK~mR6iwF2kT72scaKV2qEKryORWv5sQv2wuPswI~WZsv3s2SG05EQ~f8vB~CPNskz6rMTy7nCAGp9rmRFo7s3fRx2-eRFrYIWaQRmCAHJ9ANpW2z4M3UXcwPgSJamCxdzzRq8yw69xlKU3fbFWlaL7dYP7sYtDiexp6B-q3orsDIGofpLFPjSnLG10jcb1GtUjZedzndWA1L0dPwB4uNfGQw2DmPYuCCXkyYrzYl690YirZt4Zfp3-UT9H-dyUnOQFkbkg8zciU2EQ6-KXoGMbR3k9ieMWQIRajp34nBvZFZVjL9qA__&Key-Pair-Id=APKAJLOHF5GGSLRBV4ZA
+
+chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/http://e.guigon.free.fr/rsc/article/Freund86.pdf
+
+
+
+spec
+
+quanto è il minimo tempo di reazione che il programma capta
+
+ritardo tra premere bottone e aggiornamento schermo: 77ms, senza lo schermetto 3/4ms -> lo schemetto è il problema 74ms ci mette
+con dma ci mette 69/70ms. limite è lo schermo lento
+
+stima potenza comsumata
+
+quant memoria sulla scheda è occupata 
+
+vediamo se metterne altre
+
+
+ actual play time: 8044
+                            expected paly time: 7200
+
+
+super mario corto: (senza -1)
+ actual play time: 6434
+  expected play time: 4850
+
+con -1 (con ble)
+
+ actual play time: 5733
+  expected play time: 4850
+
+senza ble
+ actual play time: 6019
+  expected play time: 4850
+secondo tentativo
+ actual play time: 5844
+  expected play time: 4850
+
+
+
+
+
+
+fare schemnatico del sistema sia interno che esterno
+
+//////////////////////////////////////////////////////////////////////////////
+esce meno rispetto alla stima di cube mx (non ci sono le periferiche)
+osservazione: più rigne sono stampate nello schermmetto e piu consuma (es da 0.48 a 0.52 da fermo)
+power consumption:
+
+just stand-by: around 0.48W
+
+senza gicare (tutti miss)
+super mario short / difficulty 1: around 0.6W
+super mario short / difficulty 3: around 0.65W
+super mario short / difficulty 5: around 0.7W
+
+star wars / difficulty 1: around 0.7W
+star wars / difficulty 3: around 0.65W
+star wars / difficulty 5: around 0.75W
+
+tanti auguri / difficulty 1: around 0.75W
+tanti auguri / difficulty 3: around 0.6W
+tanti auguri / difficulty 5: around 0.6W
+
+inno alla gioia / difficulty 1: around 0.7W
+inno alla gioia / difficulty 3: around 0.7W
+inno alla gioia / difficulty 5: around 0.65W
+
+super mario long / difficulty 1: around 0.6W
+super mario long / difficulty 3: around 0.7W
+super mario long / difficulty 5: around 0.75W
+
+vita sperocolata / difficulty 1: around 0.75W
+vita sperocolata / difficulty 3: around 0.75W
+vita sperocolata / difficulty 5: around 0.65W
+
+con gioco (sembrerebbe meno rispetto a tutti miss, sospetto perche ci sono meno cose da aggiornare a schermo e led sempre accesi)
+
+super mario short / difficulty 1: around 0.6W
+super mario short / difficulty 3: around 0.55W
+super mario short / difficulty 5: around 0.55W
+
+
+super mario long / difficulty 1: around 0.65W
+super mario long / difficulty 3: around 0.6W
+super mario long / difficulty 5: around 0.55W
+
+
 
 
 

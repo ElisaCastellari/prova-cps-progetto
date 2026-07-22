@@ -1789,7 +1789,7 @@ GameNote_t* melodySelection(){
 080010bc <PlayTone>:
 
 
-// Funzione magica per generare una nota
+// Funzione per generare una nota
 void PlayTone(uint16_t freq) {
  80010bc:	b580      	push	{r7, lr}
  80010be:	b084      	sub	sp, #16
@@ -1817,7 +1817,7 @@ void PlayTone(uint16_t freq) {
  80010de:	4a0b      	ldr	r2, [pc, #44]	@ (800110c <PlayTone+0x50>)
  80010e0:	68fb      	ldr	r3, [r7, #12]
  80010e2:	60d3      	str	r3, [r2, #12]
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, array_value / VOLUME); // Imposta il volume (Duty cycle 50%)
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, array_value / VOLUME); // Imposta il volume (Duty cycle)
  80010e4:	4b09      	ldr	r3, [pc, #36]	@ (800110c <PlayTone+0x50>)
  80010e6:	681b      	ldr	r3, [r3, #0]
  80010e8:	68fa      	ldr	r2, [r7, #12]
@@ -2709,7 +2709,7 @@ void gamePlay(void){
 	                    // 3. Aspetta il click...
 	                    while(buttonPressed == 0 && timeoutOccurred == 0) {
  8001796:	e002      	b.n	800179e <gamePlay+0x212>
-	                        osDelay(1);
+	                        osDelay(1); //altrimenti a volte si impalla
  8001798:	2001      	movs	r0, #1
  800179a:	f008 f8ce 	bl	800993a <osDelay>
 	                    while(buttonPressed == 0 && timeoutOccurred == 0) {
