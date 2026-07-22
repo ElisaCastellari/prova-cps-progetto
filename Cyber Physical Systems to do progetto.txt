@@ -45,7 +45,47 @@ DONE	magari una funzione sola per resettare lo schermo
 
 DONE PIU O MENO	capire se c'è un modo per fare andare a capo da sola la scritta nello schermetto
 
+<<<<<<< HEAD
 reaction time minimo 250ms
+=======
+Possiamo mettere 3 timer e non accendere più casualmente assegnando a ogni nota la luce da accendere (mettere nell'array)
+
+
+
+
+Tengo valori prima e dopo le modifiche scrivendo qui il motivo delle scelte, deve essere scientifico,
+dobbiamo dire che abbiamo ragionato e non solo smanettato, alcune cose ingegnerizzate
+
+Facciamo schematico del circuito
+
+Caratterizzare bene per avere differenze con il resto
+
+Sistemare la cosa del DMA in riferimento al ritardo dello schermetto
+
+fare report dicendo risposte alle domande
+
+
+
+
+DOMANDE:
+
+Com'è caratterizzato
+
+Quali sono i consumi da cubeMX e misurati con anche il resto del circuito
+
+
+
+
+
+
+
+
+
+
+
+
+Aggiungere accelerometro con modulo .h .c
+>>>>>>> 8769a43e8a3eba709421fd5caddfe8978f69770a
 
 
 
