@@ -30,6 +30,8 @@ int bestCombo = 0; //to keep track of the best combo
 float avgResponseTime = 0; //to make average response time later
 int hitNotes = 0;  // to sum all hit notes and make average
 
+uint8_t prevLed = 0;
+
 char* songName; //per passare il nome del song
 char* noteFeedback; //per dire quanto bene ho fatto
 
@@ -510,7 +512,16 @@ void gamePlay(void){
 	    	  srand(osKernelSysTick());
 
 	    	  if ((i % SKIP_NOTES) == 0){
-	    		  targetIndex = rand() % NUM_BUTTONS;
+	    		  if (prevLed == 0){
+	    		  targetIndex = (rand() % 2) + 1;
+	    		  } else if (prevLed == 2) {
+	    			  targetIndex = rand() % 2;
+	    		  } else if (prevLed == 1){
+	    			  targetIndex = (rand() % 2) * 2;
+	    		  } else {
+	    			  targetIndex = rand() % 3;
+	    		  }
+	    		  prevLed = targetIndex;
 	    	  } else targetIndex = SKIP_VALUE;
 	    	  //targetIndex = rand() % NUM_BUTTONS;
 	    	  HAL_GPIO_WritePin(array_leds[targetIndex].port, array_leds[targetIndex].pin, GPIO_PIN_RESET);
