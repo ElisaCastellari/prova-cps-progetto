@@ -511,7 +511,7 @@ void gamePlay(void){
 
 	    	  srand(osKernelSysTick());
 
-	    	  if ((i % SKIP_NOTES) == 0){
+	    	  if ((i % SKIP_NOTES) == 0){ //per non scegliere semprelo stesso led
 	    		  if (prevLed == 0){
 	    		  targetIndex = (rand() % 2) + 1;
 	    		  } else if (prevLed == 2) {
@@ -523,6 +523,7 @@ void gamePlay(void){
 	    		  }
 	    		  prevLed = targetIndex;
 	    	  } else targetIndex = SKIP_VALUE;
+
 	    	  //targetIndex = rand() % NUM_BUTTONS;
 	    	  HAL_GPIO_WritePin(array_leds[targetIndex].port, array_leds[targetIndex].pin, GPIO_PIN_RESET);
 	    	  StopTone(); //stops the note
